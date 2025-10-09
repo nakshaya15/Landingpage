@@ -106,7 +106,7 @@ export default function LandingPage() {
         loop
         muted
         className="absolute inset-0 w-full h-full object-cover z-0"
-        src="/baby-ai-video.mp4"
+        src="/ai.mp4"
       >
         Your browser does not support the video tag.
       </video>
@@ -133,7 +133,7 @@ export default function LandingPage() {
               muted
               loop
               autoPlay
-              src="/vedio.mp4"
+              src="/ai1.mp4"
             >
               Your browser does not support the video tag.
             </video>
