@@ -133,7 +133,7 @@ export default function LandingPage() {
               muted
               loop
               autoPlay
-              src="/vedios/vedio.mp4"
+              src="/vedio.mp4"
             >
               Your browser does not support the video tag.
             </video>
