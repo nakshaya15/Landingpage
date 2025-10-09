@@ -104,6 +104,7 @@ export default function LandingPage() {
       <video
         autoPlay
         loop
+        playsInline
         muted
         className="absolute inset-0 w-full h-full object-cover z-0"
         src="/ai.mp4"
@@ -131,6 +132,7 @@ export default function LandingPage() {
               className="w-full h-72 object-cover"
               controls
               muted
+              playsInline    
               loop
               autoPlay
               src="/ai1.mp4"
