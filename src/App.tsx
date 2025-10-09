@@ -111,7 +111,6 @@ export default function LandingPage() {
       >
         Your browser does not support the video tag.
       </video>
-
       {/* Background Overlay */}
       <div className="absolute inset-0 bg-gray-900 bg-opacity-80 z-10"></div>
 
@@ -125,14 +124,13 @@ export default function LandingPage() {
         </header>
 
         {/* Video Card */}
-        <section className="flex justify-center px-2 py-3">
+              <section className="flex justify-center px-2 py-3">
           <Card className="p-0 shadow-2xl rounded-3xl w-full max-w-3xl overflow-hidden transform transition duration-500 hover:scale-105 hover:shadow-purple-500/50 bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400">
-            {/* Card Video: Path remains '/vedios/vedio.mp4' */}
             <video
               className="w-full h-72 object-cover"
               controls
               muted
-              playsInline    
+              playsInline
               loop
               autoPlay
               src="/ai1.mp4"
@@ -141,6 +139,7 @@ export default function LandingPage() {
             </video>
           </Card>
         </section>
+
 
         {/* Overview and Advantages Cards Side by Side */}
         <section className="flex justify-center px-1 py-1">
