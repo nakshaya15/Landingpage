@@ -102,15 +102,16 @@ export default function LandingPage() {
     >
       {/* Background Video: Uses the corrected path for 'baby ai vedio.mp4' */}
       <video
-        autoPlay
-        loop
-        playsInline
-        muted
-        className="absolute inset-0 w-full h-full object-cover z-0"
-        src="/ai.mp4"
-      >
-        Your browser does not support the video tag.
-      </video>
+  autoPlay
+  loop
+  muted
+  playsInline
+  preload="auto"
+  className="absolute inset-0 w-full h-full object-cover z-0"
+>
+  <source src="/ai.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
       {/* Background Overlay */}
       <div className="absolute inset-0 bg-gray-900 bg-opacity-80 z-10"></div>
 
@@ -126,17 +127,17 @@ export default function LandingPage() {
         {/* Video Card */}
               <section className="flex justify-center px-2 py-3">
           <Card className="p-0 shadow-2xl rounded-3xl w-full max-w-3xl overflow-hidden transform transition duration-500 hover:scale-105 hover:shadow-purple-500/50 bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400">
-            <video
-              className="w-full h-72 object-cover"
-              controls
-              muted
-              playsInline
-              loop
-              autoPlay
-              src="/ai1.mp4"
-            >
-              Your browser does not support the video tag.
-            </video>
+      <video
+  className="w-full h-72 object-cover"
+  controls
+  muted
+  playsInline
+  loop
+  autoPlay
+>
+  <source src="/ai1.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
           </Card>
         </section>
 
