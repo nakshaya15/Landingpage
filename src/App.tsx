@@ -99,13 +99,12 @@ export default function LandingPage() {
     <div
       className="min-h-screen flex flex-col relative"
     >
-      {/* Background Video */}
+      {/* Background Video: Uses the corrected path for 'baby ai vedio.mp4' */}
       <video
         autoPlay
         loop
         muted
         className="absolute inset-0 w-full h-full object-cover z-0"
-        // NOTE: You MUST replace this 'background_video.mp4' with the actual path to your desired background video
         src="/baby ai vedio.mp4" 
       >
         Your browser does not support the video tag.
@@ -115,8 +114,8 @@ export default function LandingPage() {
       <div className="absolute inset-0 bg-gray-900 bg-opacity-80 z-10"></div>
 
       <div className="relative z-20 flex flex-col min-h-screen">
-        {/* Header */}
-       <header className="bg-purple-900 text-white py-5 shadow-lg">
+        {/* Header: Changed to solid purple-900 */}
+        <header className="bg-purple-900 text-white py-5 shadow-lg">
           <div className="container mx-auto flex justify-between items-center px-4">
             <h1 className="text-3xl font-extrabold tracking-wide">MonsterCoders</h1>
             <span className="font-semibold text-lg">AI Training Program</span>
@@ -126,13 +125,14 @@ export default function LandingPage() {
         {/* Video Card */}
         <section className="flex justify-center px-2 py-3">
           <Card className="p-0 shadow-2xl rounded-3xl w-full max-w-3xl overflow-hidden transform transition duration-500 hover:scale-105 hover:shadow-purple-500/50 bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400">
+            {/* Card Video: Path remains '/vedios/vedio.mp4' */}
             <video
               className="w-full h-72 object-cover"
               controls
               muted
               loop
               autoPlay
-              src="/vedios/vedio.mp4"
+              src="/vedios/vedio.mp4" 
             >
               Your browser does not support the video tag.
             </video>
@@ -279,6 +279,7 @@ export default function LandingPage() {
           className="w-full h-6 bg-white/10 text-white placeholder-gray-300 border border-white/20 rounded px-2 text-[11px]"
           placeholder="Transaction ID"
         />
+        
       </div>
 
       {/* Row 4 - Payment Screenshot and QR Code side by side */}
@@ -318,7 +319,6 @@ export default function LandingPage() {
         <img src="/qr.jpg" alt="QR Code" className="w-28 h-28 rounded shadow mb-1 mx-auto" />
         <p className="font-semibold text-[11px] text-center w-full">Pay: ₹999/-</p>
         <p className="text-[10px] text-center w-full">Duration: 10 Days</p>
-        
       </div>
     </form>
   </div>
