@@ -1,8 +1,8 @@
-
+// src/components/FoundersProfile.tsx
 import React from 'react';
 import { Award, Briefcase, TrendingUp, Zap, Star } from 'lucide-react'; 
 
-// Reusable Achievement Block Component (Slightly cleaner styling)
+// Reusable Achievement Block Component
 interface AchievementBlockProps {
     icon: React.ReactNode;
     title: string;
@@ -13,7 +13,7 @@ interface AchievementBlockProps {
 const AchievementBlock: React.FC<AchievementBlockProps> = ({ icon, title, content, colorClass }) => {
     
     // Dynamic Tailwind classes
-    const ringColor = `ring-${colorClass}-300`; // New: Subtle ring on hover
+    const ringColor = `ring-${colorClass}-300`;
     const iconBg = `bg-${colorClass}-50`;
     const iconColor = `text-${colorClass}-600`;
     const titleColor = `text-gray-800`;
@@ -43,22 +43,20 @@ const AchievementBlock: React.FC<AchievementBlockProps> = ({ icon, title, conten
 
 const FoundersProfile: React.FC = () => {
   return (
-    // FIX 1: Changed bg-gray-100 to bg-transparent to show the video
     <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 bg-transparent">
       <div className="max-w-6xl mx-auto">
         
-        {/* FIX 2: Changed text-purple-800 to text-purple-400 for visibility */}
-        // Original content: The Authority & Vision
-
-<h1 className="text-5xl font-black text-white text-center mb-4 tracking-tight">
-    The Authority & <span className="text-pink-500">Vision</span>
-</h1>
-        {/* FIX 3: Changed text-indigo-700 to text-indigo-300 for visibility */}
+        {/* Main Heading (The Authority & Vision) */}
+        <h1 className="text-5xl font-black text-white text-center mb-4 tracking-tight">
+          The Authority & <span className="text-pink-500">Vision</span>
+        </h1>
+        
+        {/* Secondary Heading/Subtitle */}
         <h2 className="text-4xl font-light text-indigo-300 text-center mb-12 border-b-4 border-pink-500 pb-3 inline-block mx-auto block">
           Maqs — Founder, MonsterCoders
         </h2>
 
-        {/* INTRODUCTION BLOCK (The inner design remains dark/vibrant as it has its own background) */}
+        {/* INTRODUCTION BLOCK */}
         <div className="mb-12 p-8 bg-gradient-to-r from-indigo-700 to-purple-800 text-white rounded-xl shadow-2xl border-l-8 border-pink-500">
             <div className="flex items-center mb-4">
                 <Star size={32} className="mr-4 text-yellow-400 flex-shrink-0 animate-pulse" />
@@ -109,6 +107,7 @@ const FoundersProfile: React.FC = () => {
         </div>
         
       </div>
+      
     </div>
  );
 };
