@@ -1,4 +1,4 @@
-// src/components/FoundersProfile.tsx
+
 import React from 'react';
 import { Award, Briefcase, TrendingUp, Zap, Star } from 'lucide-react'; 
 
