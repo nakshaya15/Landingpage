@@ -1,6 +1,6 @@
 // src/components/FoundersProfile.tsx
 import React from 'react';
-import { Award, Briefcase, TrendingUp, Zap, User, Star } from 'lucide-react'; 
+import { Award, Briefcase, TrendingUp, Zap, Star } from 'lucide-react'; 
 
 // Reusable Achievement Block Component (Slightly cleaner styling)
 interface AchievementBlockProps {

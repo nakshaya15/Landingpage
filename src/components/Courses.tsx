@@ -15,8 +15,7 @@ interface CourseCardProps {
 const CourseCard: React.FC<CourseCardProps> = ({ title, subtitle, icon, sections, baseColor }) => {
   
   // Dynamic color classes based on baseColor prop
-  const headerBg = `bg-${baseColor}-600`;
-  const iconColor = `text-${baseColor}-100`;
+  
   const sectionBg = `bg-${baseColor}-50`;
   const sectionTextColor = `text-${baseColor}-700`; 
   const hoverShadow = `shadow-${baseColor}-500/50`;

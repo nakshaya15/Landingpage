@@ -1,6 +1,6 @@
 // src/components/Placements.tsx
 import React from 'react';
-import { CheckCircle, Briefcase, Zap, Compass, Lightbulb, TrendingUp } from 'lucide-react'; 
+import {  Briefcase, Zap, Compass, Lightbulb, TrendingUp } from 'lucide-react'; 
 
 // Reusable Feature/Why Choose Us Card Component (Unique Hover Effect)
 interface FeatureCardProps {
