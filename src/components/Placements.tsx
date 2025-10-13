@@ -78,9 +78,9 @@ const Placements: React.FC = () => {
             {/* --- PLACEMENT SUCCESS HEADER (Gradient & Bold) --- */}
             <div className="bg-gradient-to-r from-purple-800 to-indigo-700 text-white py-16 px-4 sm:px-6 lg:px-8 shadow-2xl relative">
                 <div className="max-w-6xl mx-auto text-center">
-                    <h1 className="text-5xl font-extrabold mb-3 tracking-tight">
-                        Proven Placements & Alumni Success
-                    </h1>
+                    <h1 className="text-5xl font-black text-white text-center mb-4 tracking-tight">
+    <span className="text-pink-500">Proven</span> Placements & Alumni Success
+</h1>
                     <p className="text-xl font-light text-indigo-200 mb-10 max-w-3xl mx-auto">
                         Our graduates are known for their ability to deliver from day one, backed by deep technical knowledge and strong problem-solving abilities.
                     </p>

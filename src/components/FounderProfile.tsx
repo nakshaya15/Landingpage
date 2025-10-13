@@ -48,9 +48,11 @@ const FoundersProfile: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         
         {/* FIX 2: Changed text-purple-800 to text-purple-400 for visibility */}
-        <h1 className="text-5xl font-extrabold text-purple-400 text-center mb-4">
-          The Authority & Vision
-        </h1>
+        // Original content: The Authority & Vision
+
+<h1 className="text-5xl font-black text-white text-center mb-4 tracking-tight">
+    The Authority & <span className="text-pink-500">Vision</span>
+</h1>
         {/* FIX 3: Changed text-indigo-700 to text-indigo-300 for visibility */}
         <h2 className="text-4xl font-light text-indigo-300 text-center mb-12 border-b-4 border-pink-500 pb-3 inline-block mx-auto block">
           Maqs — Founder, MonsterCoders

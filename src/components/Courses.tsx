@@ -131,9 +131,9 @@ const Courses: React.FC = () => {
   return (
     <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-5xl font-extrabold text-white text-center mb-4">
-          Our Intensive Programs
-        </h1>
+       <h1 className="text-5xl font-black text-white text-center mb-4 tracking-tight">
+    Our <span className="text-pink-500">Intensive</span> Programs
+</h1>
         <p className="text-xl text-pink-300 text-center mb-12">
           At MonsterCoders, training is intensive, structured, and transformation-oriented. Every course is designed to take a student step-by-step from beginner to professional.
         </p>
