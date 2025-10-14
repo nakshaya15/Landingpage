@@ -1,5 +1,5 @@
 import React from 'react';
-import { Briefcase, Zap, Compass, Lightbulb, TrendingUp, Users } from 'lucide-react'; 
+import { Briefcase, Zap, Compass, Lightbulb,  Users } from 'lucide-react'; 
 
 // Reusable Feature/Why Choose Us Card Component (Unique Hover Effect)
 interface FeatureCardProps {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, Briefcase, TrendingUp, Zap, Star, Anchor } from 'lucide-react'; // Added Anchor for the Core Mission block
+import { Award, Briefcase,  Zap, Star, Anchor } from 'lucide-react'; // Added Anchor for the Core Mission block
 
 // Reusable Achievement Block Component
 interface AchievementBlockProps {
