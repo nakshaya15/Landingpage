@@ -6,27 +6,30 @@ interface FeatureCardProps {
     icon: React.ReactNode;
     title: string;
     content: string;
-    accentColor: string; // New prop for dynamic color
+    accentColor: string; // e.g., 'indigo', 'green', 'purple'
 }
 
-// Reusable animated Card Component (Highly Enhanced)
+// Reusable animated Card Component (Highly Enhanced with Colors)
 const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, content, accentColor }) => {
     
-    // Dynamic classes for deeper integration
+    // Dynamic Tailwind classes for deeper integration
+    const bgColor = `bg-gradient-to-br from-${accentColor}-50 to-${accentColor}-100`; // Subtle gradient
     const borderColor = `border-${accentColor}-500`;
-    const iconColor = `text-${accentColor}-500`;
-    const shadowHover = `hover:shadow-${accentColor}-400/70`;
+    const iconColor = `text-${accentColor}-600`;
+    const titleColor = `text-${accentColor}-800`; // Darker title for contrast
+    const contentColor = `text-${accentColor}-700`; // Darker content
+    const shadowHover = `hover:shadow-${accentColor}-400/60`;
     const ringColor = `ring-${accentColor}-300`;
     
     return (
         <div 
             className={`
-                // Base: White card, smooth corners, depth
-                bg-white p-8 rounded-2xl shadow-xl transition-all duration-500 
+                // Base: Colored gradient card, smooth corners, depth
+                ${bgColor} p-8 rounded-2xl shadow-lg transition-all duration-500 
                 
-                // Animated Border & Hover Effect
-                border-b-4 ${borderColor} ring-2 ring-transparent 
-                hover:scale-[1.05] 
+                // Animated Border, Lift & Hover Effect
+                border-b-4 ${borderColor} ring-2 ring-transparent
+                hover:scale-[1.02] hover:translate-y-[-5px] // Subtle lift
                 hover:shadow-3xl 
                 ${shadowHover}
                 hover:ring-4 ${ringColor}
@@ -35,31 +38,31 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, content, accentC
                 relative group
             `}
         >
-            {/* Icon - With Background and Rotation on Hover */}
-            <div className={`p-3 rounded-full bg-gray-100 ${iconColor} 
+            {/* Animated Icon - With Background and Rotation on Hover */}
+            <div className={`p-3 rounded-full bg-white ${iconColor} 
                             inline-block mb-4 shadow-md ring-4 ring-white
-                            transition-all duration-500 group-hover:rotate-6 group-hover:bg-white`}>
+                            transition-all duration-500 
+                            group-hover:rotate-6 group-hover:scale-110 group-hover:shadow-lg group-hover:ring-${accentColor}-200`}>
                 {icon}
             </div>
             
             {/* Title */}
-            <h3 className="text-2xl font-black text-gray-900 mb-3 tracking-tight">{title}</h3>
+            <h3 className={`text-2xl font-black ${titleColor} mb-3 tracking-tight`}>{title}</h3>
             
             {/* Content */}
-            <p className="text-md text-gray-600 leading-relaxed font-normal">{content}</p>
+            <p className={`text-md ${contentColor} leading-relaxed font-normal`}>{content}</p>
         </div>
     );
 };
 
 const AboutUs: React.FC = () => {
     return (
-        // FIX: Ensure main container is transparent to show the global video background
         <div className="py-20 px-4 sm:px-6 lg:px-8 bg-transparent"> 
             <div className="max-w-6xl mx-auto">
                 
                 {/* Main Heading - High contrast against dark video background */}
                 <h1 className="text-5xl font-black text-white text-center mb-4 tracking-tight">
-                    Behind the <span className="text-pink-500">Monster</span>
+                    Behind the <span className="text-pink-500">Monster Coders</span>
                 </h1>
                 <p className="text-xl text-gray-300 text-center mb-16 max-w-3xl mx-auto">
                     Transforming students into industry-leading tech innovators since 2001.

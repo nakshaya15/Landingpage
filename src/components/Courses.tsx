@@ -1,4 +1,3 @@
-// src/components/Courses.tsx
 import React from 'react';
 import { Code, Bot, Zap, Package } from 'lucide-react'; 
 
@@ -8,37 +7,48 @@ interface CourseCardProps {
   subtitle: string;
   icon: React.ReactNode;
   sections: { title: string; items: string[] }[];
-  baseColor: string; 
+  baseColor: string; // e.g., 'indigo', 'green', 'purple', 'pink'
 }
 
-// Reusable Course Card Component with Enhanced Headings
+// Reusable Course Card Component with Enhanced Headings and Animation
 const CourseCard: React.FC<CourseCardProps> = ({ title, subtitle, icon, sections, baseColor }) => {
   
   // Dynamic color classes based on baseColor prop
-  
+  const bgColor = `bg-gradient-to-br from-${baseColor}-50 to-${baseColor}-100`; // New: Card gradient
+  const titleColor = `text-${baseColor}-800`; // New: Dynamic title color
+  const borderColor = `border-${baseColor}-600`;
+  const iconColor = `text-${baseColor}-600`;
   const sectionBg = `bg-${baseColor}-50`;
   const sectionTextColor = `text-${baseColor}-700`; 
   const hoverShadow = `shadow-${baseColor}-500/50`;
+  const ringHover = `ring-${baseColor}-300`;
+  const footerHoverBg = `group-hover:bg-${baseColor}-100`;
   
   return (
     <div 
       className={`
-        bg-white rounded-xl shadow-lg transition-all duration-500 overflow-hidden h-full 
-        transform hover:scale-[1.02] hover:shadow-2xl hover:${hoverShadow} 
-        group cursor-default flex flex-col
+        // Base Styling: Gradient background, sharp edges
+        ${bgColor} rounded-xl shadow-lg transition-all duration-500 overflow-hidden h-full 
+        
+        // Animation & Hover: Lift, Scale, Shadow, and Ring
+        transform hover:scale-[1.02] hover:translate-y-[-3px] 
+        hover:shadow-2xl hover:${hoverShadow} 
+        ring-2 ring-transparent hover:ring-4 ${ringHover}
+        
+        group cursor-default flex flex-col border border-transparent
       `}
     >
       
-      {/* 1. TITLE BLOCK (Now Explicitly Visible with Dark Text) */}
-      <div className={`p-6 border-b-4 border-${baseColor}-600`}>
+      {/* 1. TITLE BLOCK (Strongly Colored Header) */}
+      <div className={`p-6 border-b-4 ${borderColor} bg-white bg-opacity-70 backdrop-blur-sm`}>
         <div className="flex items-center">
-            {/* Icon is now colored according to the card theme, placed outside the header block */}
-            <div className={`mr-4 p-1 rounded-full text-${baseColor}-600`}>
+            {/* Icon Container: Now slightly larger and more pronounced */}
+            <div className={`mr-4 p-2 rounded-lg ${iconColor} bg-white shadow-md flex-shrink-0`}>
                 {icon}
             </div>
             <div>
-                {/* FIX: Title is now explicitly text-gray-900 (black) */}
-                <h3 className="text-2xl font-extrabold text-gray-900">{title}</h3> 
+                {/* Dynamic Title Color */}
+                <h3 className={`text-2xl font-black ${titleColor}`}>{title}</h3> 
                 <p className="text-sm font-medium text-gray-600 mt-0.5">{subtitle}</p>
             </div>
         </div>
@@ -50,7 +60,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ title, subtitle, icon, sections
           <div key={index} className="mb-0">
             
             {/* --- SECTION HEADING --- */}
-            <h4 className={`text-lg font-extrabold ${sectionTextColor} ${sectionBg} p-4 uppercase tracking-wide border-t border-gray-100`}>
+            <h4 className={`text-lg font-extrabold ${sectionTextColor} ${sectionBg} p-4 uppercase tracking-wide border-t border-${baseColor}-200`}>
               {section.title}
             </h4>
             
@@ -69,8 +79,8 @@ const CourseCard: React.FC<CourseCardProps> = ({ title, subtitle, icon, sections
         ))}
       </div>
       
-      {/* Footer/CTA Placeholder */}
-      <div className={`p-4 text-center text-sm font-semibold transition duration-300 group-hover:bg-${baseColor}-100 mt-auto`}>
+      {/* Footer/CTA Placeholder (Dynamic Hover Background) */}
+      <div className={`p-4 text-center text-sm font-black transition duration-300 ${footerHoverBg} mt-auto border-t border-gray-200`}>
         <span className={`text-${baseColor}-700`}>Learn more & Apply →</span>
       </div>
     </div>
@@ -84,7 +94,7 @@ const Courses: React.FC = () => {
     {
       title: "Java Full Stack Development",
       subtitle: "Master the complete ecosystem of Java technologies.",
-      icon: <Code size={24} />,
+      icon: <Code size={28} />,
       baseColor: "indigo",
       sections: [
         { title: "Backend & Core", items: ["Core Java, Advanced Java", "Spring Boot, JUnit, Mockito"] },
@@ -96,7 +106,7 @@ const Courses: React.FC = () => {
     {
       title: "Python Full Stack Development",
       subtitle: "End-to-end Python-based application development.",
-      icon: <Package size={24} />,
+      icon: <Package size={28} />,
       baseColor: "green",
       sections: [
         { title: "Core Development", items: ["Python fundamentals, API creation", "Frontend integration"] },
@@ -107,7 +117,7 @@ const Courses: React.FC = () => {
     {
       title: "Artificial Intelligence & ML",
       subtitle: "Become a next-gen AI innovator with a holistic curriculum.",
-      icon: <Bot size={24} />,
+      icon: <Bot size={28} />,
       baseColor: "purple",
       sections: [
         { title: "Core Foundation", items: ["Python Full Stack", "Data Structures & Algorithms", "Math for AI"] },
@@ -118,7 +128,7 @@ const Courses: React.FC = () => {
     {
       title: "AI User Training",
       subtitle: "Leverage AI tools for immediate productivity and innovation.",
-      icon: <Zap size={24} />,
+      icon: <Zap size={28} />,
       baseColor: "pink",
       sections: [
         { title: "Productivity Tools", items: ["Using AI tools like ChatGPT effectively", "Creating Presentations, Word Docs & Excel Dashboards with AI"] },
@@ -129,11 +139,11 @@ const Courses: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 bg-transparent">
       <div className="max-w-7xl mx-auto">
        <h1 className="text-5xl font-black text-white text-center mb-4 tracking-tight">
-    Our <span className="text-pink-500">Intensive</span> Programs
-</h1>
+          Our <span className="text-pink-500">Intensive</span> Programs
+       </h1>
         <p className="text-xl text-pink-300 text-center mb-12">
           At MonsterCoders, training is intensive, structured, and transformation-oriented. Every course is designed to take a student step-by-step from beginner to professional.
         </p>
