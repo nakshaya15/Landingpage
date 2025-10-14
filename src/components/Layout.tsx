@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom'; 
-import { Menu, X } from 'lucide-react'; 
+// Added relevant icons for the Footer: MapPin, Mail, Phone, Twitter, Instagram, Linkedin
+import { Menu, X, MapPin, Mail, Phone, Twitter, Instagram, Linkedin } from 'lucide-react'; 
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -16,26 +17,27 @@ const NavLinks = [
     { name: 'Clients', path: '/clients' },
 ];
 
+const SocialLinks = [
+    { icon: Twitter, href: "#twitter", label: "Twitter" },
+    { icon: Instagram, href: "#instagram", label: "Instagram" },
+    { icon: Linkedin, href: "#linkedin", label: "LinkedIn" },
+];
+
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    // State to track if the user has scrolled past a certain point
     const [scrolled, setScrolled] = useState(false);
-    const location = useLocation(); // To highlight the active link
+    const location = useLocation();
 
     // Effect to handle scroll-based dynamic header styling
     useEffect(() => {
         const handleScroll = () => {
-            // Set scrolled to true if pageYOffset is greater than 80px
             const isScrolled = window.scrollY > 80;
             if (isScrolled !== scrolled) {
                 setScrolled(isScrolled);
             }
         };
 
-        // Attach scroll listener
         window.addEventListener('scroll', handleScroll);
-
-        // Cleanup listener on component unmount
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
@@ -46,12 +48,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
     // Dynamic header and logo classes based on scroll state
     const headerClasses = scrolled 
-        ? 'py-2 bg-purple-900/95 backdrop-blur-md shadow-3xl' // Shorter, more blur, stronger shadow
-        : 'py-4 bg-purple-900/90 backdrop-blur-sm shadow-2xl'; // Taller, less blur
+        ? 'py-2 bg-purple-900/95 backdrop-blur-md shadow-3xl'
+        : 'py-4 bg-purple-900/90 backdrop-blur-sm shadow-2xl';
         
     const logoSize = scrolled 
-        ? 'text-3xl' // Slightly smaller when scrolled
-        : 'text-4xl'; // Full size at top
+        ? 'text-3xl'
+        : 'text-4xl';
         
     // --- Render ---
     return (
@@ -98,14 +100,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                             <Link 
                                                 to={link.path} 
                                                 className={`
-                                                    // Base Button Style (Pill shape, background, border)
                                                     px-4 py-2 rounded-full border border-pink-500 transition-all duration-300 text-base font-semibold
                                                     bg-purple-800/60 hover:bg-purple-700/80
-                                                    
-                                                    // Animated Effects (Optimistic Lift and Shadow Glow)
                                                     transform hover:scale-[1.05] hover:shadow-pink-400/50 hover:shadow-xl
-                                                    
-                                                    // Active State (Solid Pink Fill)
                                                     ${isActive 
                                                         ? 'bg-pink-600 text-white border-pink-400 scale-[1.02] shadow-pink-500/70 shadow-lg' 
                                                         : 'text-gray-200'}
@@ -165,6 +162,91 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <main className="flex-grow z-20"> 
                     {children}
                 </main>
+
+                {/* --- 5. Footer Component --- */}
+                <footer className="bg-purple-900/90 backdrop-blur-sm text-gray-300 relative z-20 border-t border-pink-500/30">
+                    <div className="container mx-auto px-4 py-12">
+                        
+                        <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-4">
+                            
+                            {/* Company Info */}
+                            <div>
+                                <h3 className="text-2xl font-extrabold tracking-wider text-white mb-4">
+                                    <span className="text-pink-500">M</span>onster<span className="text-pink-500">C</span>oders
+                                </h3>
+                                <p className="text-sm leading-relaxed">
+                                    Pioneering the future of tech education with cutting-edge curricula and real-world projects.
+                                </p>
+                                <div className="flex space-x-4 mt-6">
+                                    {SocialLinks.map((social) => (
+                                        <a key={social.label} href={social.href} aria-label={social.label} 
+                                           className="text-pink-400 hover:text-pink-500 transition-colors transform hover:scale-110">
+                                            <social.icon size={24} />
+                                        </a>
+                                    ))}
+                                </div>
+                            </div>
+                            
+                            {/* Quick Links */}
+                            <div className="pl-4 md:pl-0">
+                                <h4 className="text-xl font-semibold text-pink-400 mb-4 border-b-2 border-pink-500/50 pb-1 inline-block">
+                                    Quick Links
+                                </h4>
+                                <ul className="space-y-2 text-sm">
+                                    {NavLinks.slice(0, 4).map(link => ( // Showing only a few key links
+                                        <li key={link.name}>
+                                            <Link to={link.path} className="hover:text-white transition-colors">
+                                                {link.name}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            {/* Services/More Links */}
+                            <div>
+                                <h4 className="text-xl font-semibold text-pink-400 mb-4 border-b-2 border-pink-500/50 pb-1 inline-block">
+                                    Resources
+                                </h4>
+                                <ul className="space-y-2 text-sm">
+                                    <li><Link to="/legal" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+                                    <li><Link to="/terms" className="hover:text-white transition-colors">Terms of Use</Link></li>
+                                    <li><Link to="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
+                                    <li><Link to="/careers" className="hover:text-white transition-colors">Careers</Link></li>
+                                </ul>
+                            </div>
+
+                            {/* Contact Info */}
+                            <div>
+                                <h4 className="text-xl font-semibold text-pink-400 mb-4 border-b-2 border-pink-500/50 pb-1 inline-block">
+                                    Connect
+                                </h4>
+                                <ul className="space-y-3 text-sm">
+                                    <li className="flex items-start">
+                                        <MapPin size={18} className="text-pink-500 mr-3 mt-1 flex-shrink-0" />
+                                        <span>123 Tech Drive, Silicon Valley, CA 94000</span>
+                                    </li>
+                                    <li className="flex items-center">
+                                        <Mail size={18} className="text-pink-500 mr-3" />
+                                        <a href="mailto:info@monstercoders.com" className="hover:text-white transition-colors">info@monstercoders.com</a>
+                                    </li>
+                                    <li className="flex items-center">
+                                        <Phone size={18} className="text-pink-500 mr-3" />
+                                        <a href="tel:+18005551234" className="hover:text-white transition-colors">+1 (800) 555-1234</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    {/* Copyright Bar */}
+                    <div className="bg-purple-900 py-4 border-t border-purple-700">
+                        <div className="container mx-auto px-4 text-center text-xs text-gray-500">
+                            &copy; {new Date().getFullYear()} MonsterCoders. All rights reserved. Built with passion.
+                        </div>
+                    </div>
+                </footer>
             </div>
         </div>
     );
