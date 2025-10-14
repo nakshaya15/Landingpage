@@ -65,7 +65,7 @@ const AboutUs: React.FC = () => {
                     Behind the <span className="text-pink-500">Monster Coders</span>
                 </h1>
                 <p className="text-xl text-gray-300 text-center mb-16 max-w-3xl mx-auto">
-                    Transforming students into industry-leading tech innovators since 2001.
+                    Transforming students into industry-leading tech innovators since 2021.
                 </p>
 
                 {/* Introduction Section (Background is slightly darker/blurred to enhance text contrast) */}

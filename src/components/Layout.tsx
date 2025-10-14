@@ -216,23 +216,31 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                 </ul>
                             </div>
 
-                            {/* Contact Info */}
+                            {/* Contact Info (Updated) */}
                             <div>
                                 <h4 className="text-xl font-semibold text-pink-400 mb-4 border-b-2 border-pink-500/50 pb-1 inline-block">
                                     Connect
                                 </h4>
                                 <ul className="space-y-3 text-sm">
+                                    {/* Updated Address */}
                                     <li className="flex items-start">
                                         <MapPin size={18} className="text-pink-500 mr-3 mt-1 flex-shrink-0" />
-                                        <span>123 Tech Drive, Silicon Valley, CA 94000</span>
+                                        <span>Manjeera Trinity Corporate, kphb, Hyd-72</span>
                                     </li>
+                                    {/* Primary Email */}
                                     <li className="flex items-center">
                                         <Mail size={18} className="text-pink-500 mr-3" />
                                         <a href="mailto:info@monstercoders.com" className="hover:text-white transition-colors">info@monstercoders.com</a>
                                     </li>
+                                    {/* Secondary Email */}
+                                     <li className="flex items-center">
+                                        <Mail size={18} className="text-pink-500 mr-3" />
+                                        <a href="mailto:MonsterCoders@gmail.com" className="hover:text-white transition-colors">MonsterCoders@gmail.com</a>
+                                    </li>
+                                    {/* Updated Phone Number */}
                                     <li className="flex items-center">
                                         <Phone size={18} className="text-pink-500 mr-3" />
-                                        <a href="tel:+18005551234" className="hover:text-white transition-colors">+1 (800) 555-1234</a>
+                                        <a href="tel:+918247707851" className="hover:text-white transition-colors">824-7707-851</a>
                                     </li>
                                 </ul>
                             </div>
@@ -251,5 +259,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </div>
     );
 };
+
 
 export default Layout;
