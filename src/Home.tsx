@@ -151,6 +151,7 @@ const InputField: React.FC<{
 
 
 // --- Registration Form Modal Component (Refactored for compactness) ---
+// --- Registration Form Modal Component (Refactored for compactness) ---
 const RegistrationFormModal: React.FC<{
     course: string;
     onClose: () => void;
@@ -265,10 +266,15 @@ const RegistrationFormModal: React.FC<{
     }
 
     return (
-        // Modal Overlay
-        <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex justify-center items-center p-4 transition duration-300 ease-out">
-            {/* Modal Content */}
-            <div className="bg-gray-900 rounded-xl shadow-2xl w-full max-w-lg p-6 border border-purple-500/50 transform transition duration-300 ease-out scale-100">
+        // Modal Overlay: Full screen
+        <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex justify-center items-start md:items-center p-0 md:p-4 transition duration-300 ease-out overflow-y-auto">
+            {/* Modal Content: Now takes full width and nearly full height on mobile/small screens (w-full max-w-full h-full), but is constrained on md screens */}
+            <div className="
+                bg-gray-900 rounded-none md:rounded-xl shadow-2xl w-full
+                max-w-full h-full sm:max-w-lg sm:h-auto md:w-full p-6
+                border border-purple-500/50 transform transition duration-300 ease-out
+                scale-100 overflow-y-auto
+            ">
 
                 {/* Modal Header */}
                 <div className="flex justify-between items-center mb-6 border-b border-gray-700 pb-3">
@@ -361,9 +367,9 @@ const RegistrationFormModal: React.FC<{
                             <select
                                 className="
                                     shadow border rounded w-full py-2 px-3 h-[42px] /* Adjusted height for alignment */
-                                    text-gray-300 leading-tight              
+                                    text-gray-300 leading-tight                       
                                     focus:outline-none focus:ring-2
-                                    border-gray-600 bg-gray-700             
+                                    border-gray-600 bg-gray-700                       
                                     focus:border-purple-500 focus:ring-purple-500
                                 "
                                 id="course"
