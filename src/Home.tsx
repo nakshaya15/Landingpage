@@ -500,7 +500,7 @@ const Home: React.FC = () => {
         const registrationsCollectionPath = `artifacts/${appId}/public/data/registrations`;
         const q = collection(db, registrationsCollectionPath);
 
-        const unsubscribe = onSnapshot(q, (snapshot) => {
+       const unsubscribe = onSnapshot(q, (_) => { // Changed 'snapshot' to '_'
             // Data is fetched but not processed or stored in state anymore
             // The listener ensures the database state is ready for saving documents.
             // Keeping it simple to avoid TS unused variable warnings.
