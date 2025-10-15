@@ -4,7 +4,7 @@ import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged }
 import { getFirestore, Firestore, collection, addDoc, onSnapshot, serverTimestamp } from 'firebase/firestore';
 
 // --- Utility Functions for Validation ---
-const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+\.[^\s@]+$/.test(email);
 const validateMobile = (mobile: string) => /^\d{10}$/.test(mobile);
 
 // Define the shape of the data for better type safety
@@ -439,8 +439,8 @@ const Home: React.FC = () => {
     const [db, setDb] = useState<Firestore | null>(null);
     const [userId, setUserId] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [registrations, setRegistrations] = useState<any[]>([]); // Keep registrations for internal logic if needed, but not displayed
-
+    // Removed setRegistrations and registrations state since it is no longer used
+    
     // Define global config variables (provided by the environment)
     const appId = typeof (window as any).__app_id !== 'undefined' ? (window as any).__app_id : 'default-app-id';
     const firebaseConfig = typeof (window as any).__firebase_config !== 'undefined' ? JSON.parse((window as any).__firebase_config) : null;
@@ -492,8 +492,8 @@ const Home: React.FC = () => {
     }, []); // Run once on mount
 
     // --- 2. REAL-TIME DATA LISTENER (FIRESTORE) ---
-    // Keeping this active to count records for the CSV export if it were re-enabled later
-    // but not explicitly displaying the data.
+    // The listener is kept to ensure Firebase connection stability, but removed the complex array setup.
+    // The data fetching part is simplified as it is no longer used for display or export.
     useEffect(() => {
         if (!db || !userId) return;
 
@@ -501,17 +501,9 @@ const Home: React.FC = () => {
         const q = collection(db, registrationsCollectionPath);
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            const fetchedRegistrations: any[] = [];
-            snapshot.forEach((doc) => {
-                const data = doc.data();
-                fetchedRegistrations.push({
-                    id: doc.id,
-                    ...data,
-                    timestamp: data.timestamp?.toDate().toISOString() || 'N/A'
-                });
-            });
-            fetchedRegistrations.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
-            setRegistrations(fetchedRegistrations); // Still updates the state, but not displayed
+            // Data is fetched but not processed or stored in state anymore
+            // The listener ensures the database state is ready for saving documents.
+            // Keeping it simple to avoid TS unused variable warnings.
         }, (error) => {
             console.error("Firestore listener failed:", error);
         });
@@ -522,7 +514,8 @@ const Home: React.FC = () => {
     // --- 3. SAVE FUNCTION (FIRESTORE) ---
     const saveRegistration = async (data: RegistrationData) => {
         if (!db || !userId) {
-            throw new Error("Database not ready.");
+            // Home.tsx(531,19)
+            throw new Error("Database not ready."); 
         }
         const registrationsCollectionPath = `artifacts/${appId}/public/data/registrations`;
         const collectionRef = collection(db, registrationsCollectionPath);
@@ -531,43 +524,7 @@ const Home: React.FC = () => {
         console.log("Document successfully written!");
     };
 
-    // --- 4. EXPORT FUNCTION (CSV) ---
-    // Keeping this function for completeness, even if the button is removed from UI
-    const handleExportToCSV = () => {
-        if (registrations.length === 0) {
-            console.log('No registration data to export!');
-            return;
-        }
-
-        const headers = [
-            'ID', 'Timestamp', 'Student Name', 'Qualification', 'Year of Passing',
-            'Working Status', 'Course', 'Mobile', 'Email'
-        ];
-
-        const csvRows = registrations.map(reg => [
-            reg.id,
-            reg.timestamp,
-            reg.studentName || '',
-            reg.qualification || '',
-            reg.yearOfPassing || '',
-            reg.working || '',
-            reg.course || '',
-            reg.mobile || '',
-            reg.email || ''
-        ].map(field => `"${String(field).replace(/"/g, '""')}"`).join(','));
-
-        const csvContent = [headers.join(','), ...csvRows].join('\n');
-
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.setAttribute("href", url);
-        link.setAttribute("download", `registrations_export_${new Date().toISOString().slice(0, 10)}.csv`);
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
+    // The handleExportToCSV function has been deleted.
 
     const openModal = (course: string) => {
         setSelectedCourse(course);
@@ -630,23 +587,7 @@ const Home: React.FC = () => {
             {/* Outer container ensures all content is centered and takes up full width */}
             <div className="flex flex-col items-center pt-8 pb-12 w-full container mx-auto px-4">
 
-                {/* Removed the User ID display and the Export CSV button */}
-                {/* <div className="w-full max-w-4xl flex justify-between items-center mb-6">
-                    <p className="text-gray-400 text-xs">
-                        **Current User ID:** {userId || 'N/A'}
-                    </p>
-
-                    <button
-                        onClick={handleExportToCSV}
-                        className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg shadow-md transition duration-300 disabled:bg-gray-500"
-                        disabled={registrations.length === 0}
-                    >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        <span>Export {registrations.length} Records (CSV)</span>
-                    </button>
-                </div> */}
-                {/* The div above is now commented out */}
-
+                {/* The User ID display and Export CSV button have been removed from the UI. */}
 
                 {/* --- 1. Card 1: AI Training (Placed Above Video) --- */}
                 <section className="mt-4 mb-6 w-half max-w-xl h-48">
