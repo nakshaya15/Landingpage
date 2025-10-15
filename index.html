@@ -1,13 +1,35 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React + TS</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+       <script>
+    // 1. PROJECT IDENTIFIER
+    window.__app_id = "mclandingpage"; 
+
+    // 2. FIREBASE CONFIGURATION (Ensure ALL quotes and characters are correct)
+    window.__firebase_config = JSON.stringify({
+        // CRITICAL: THIS MUST BE EXACTLY THE KEY FROM YOUR SCREENSHOT
+       apiKey: "AIzaSyAz4MFrLnJj3gUjCtMVPGYUZhcVpKb4mfc",
+        
+        authDomain: "mclandingpage.firebaseapp.com",
+        projectId: "mclandingpage",
+        storageBucket: "mclandingpage.firebasestorage.app",
+        messagingSenderId: "72096909935",
+        appId: "1:72096909935:web:1a187ea038ee3e8e395b9a",
+        // measurementId is optional and can be left out if you wish
+    });
+
+    // 3. AUTH TOKEN 
+    window.__initial_auth_token = null; 
+</script>
+
+        <script type="module" src="/src/main.tsx"></script> 
+  </body>
 </html>
