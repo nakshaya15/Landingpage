@@ -4,7 +4,7 @@ import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged }
 import { getFirestore, Firestore, collection, addDoc, onSnapshot, serverTimestamp } from 'firebase/firestore';
 
 // --- Utility Functions for Validation ---
-const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+\.[^\s@]+$/.test(email);
+const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); 
 const validateMobile = (mobile: string) => /^\d{10}$/.test(mobile);
 
 // Define the shape of the data for better type safety
