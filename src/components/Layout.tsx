@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// NOTE: Assuming Link and useLocation are correctly imported and available in your environment.
 import { Link, useLocation } from 'react-router-dom'; 
 import { Menu, X, MapPin, Mail, Phone, Twitter, Instagram, Linkedin } from 'lucide-react'; 
 
@@ -26,8 +25,6 @@ const SocialLinks = [
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    // If running without React Router, this hook might throw an error. 
-    // We keep it as provided by the user.
     const location = useLocation();
 
     // Effect to handle scroll-based dynamic header styling
@@ -105,14 +102,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     alt="Apple Logo" 
                                     className={`
                                         transition-all duration-500 mr-1
-                                        ${scrolled ? 'h-6' : 'h-8'} // <--- INCREASED APPLE LOGO SIZE
+                                        ${scrolled ? 'h-6' : 'h-8'} 
                                     `}
                                     style={{ filter: 'grayscale(0) drop-shadow(0 0 5px rgba(255, 255, 255, 0.7))' }} 
                                 />
                                 <span className={`
                                     text-pink-400 font-semibold transition-all duration-500 
-                                    text-lg sm:text-xl lg:text-2xl // <--- INCREASED FONT SIZES
-                                    ${scrolled ? 'text-base sm:text-lg' : 'text-lg lg:text-2xl'} // Adjusted scrolled sizes
+                                    text-lg sm:text-xl lg:text-2xl 
+                                    ${scrolled ? 'text-base sm:text-lg' : 'text-lg lg:text-2xl'} 
                                 `}>
                                     IT Training
                                 </span>
@@ -163,7 +160,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 {/* 4. Mobile Menu Overlay (FIXED POSITIONING) */}
                 <div 
                     className={`
-                        fixed top-0 right-0 h-full w-64 bg-purple-900/95 backdrop-blur-md z-50 shadow-2xl // FIX: Set top-0, h-full, z-50
+                        fixed top-0 right-0 h-full w-64 bg-purple-900/95 backdrop-blur-md z-50 shadow-2xl 
                         transition-all duration-500 ease-in-out
                         lg:hidden overflow-y-auto 
                         ${isMenuOpen 
@@ -171,7 +168,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             : 'translate-x-full opacity-0 scale-95 pointer-events-none'}
                     `}
                 >
-                    <nav className="flex flex-col pt-24 p-4 space-y-2"> // FIX: Added pt-24 to push content below the header
+                    {/* The stray comment/text line has been removed from here */}
+                    <nav className="flex flex-col pt-24 p-4 space-y-2"> 
                         {NavLinks.map(link => (
                             <Link
                                 key={link.name}
