@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom'; 
-// Added relevant icons for the Footer: MapPin, Mail, Phone, Twitter, Instagram, Linkedin
 import { Menu, X, MapPin, Mail, Phone, Twitter, Instagram, Linkedin } from 'lucide-react'; 
 
 interface LayoutProps {
@@ -51,9 +50,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         ? 'py-2 bg-purple-900/95 backdrop-blur-md shadow-3xl'
         : 'py-4 bg-purple-900/90 backdrop-blur-sm shadow-2xl';
         
+    // Adjusted logo size class for better fit on desktop
     const logoSize = scrolled 
-        ? 'text-3xl'
-        : 'text-4xl';
+        ? 'text-3xl lg:text-4xl' // Increased size for scrolled state
+        : 'text-4xl lg:text-5xl'; // Increased size for default state
         
     // --- Render ---
     return (
@@ -85,14 +85,42 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 `}>
                     <div className="container mx-auto flex justify-between items-center px-4">
                         
-                        {/* 1. Logo/Brand (Animated Size) */}
-                        <Link to="/" className={`font-extrabold tracking-wide text-white transition-all duration-500 ${logoSize}`}>
-                            <span className="text-pink-500">M</span>onster<span className="text-pink-500">C</span>oders
+                        {/* 1. Logo/Brand (TWO-LINE LAYOUT & CENTERED & INCREASED SIZE) */}
+                        <Link to="/" className={`
+                            font-extrabold tracking-wide text-white transition-all duration-500 flex flex-col items-center min-w-0 
+                        `}>
+                            
+                            {/* Line 1: MonsterCoders (Uses increased logoSize variable) */}
+                            <span className={logoSize}>
+                                <span className="text-pink-500">M</span>onster<span className="text-pink-500">C</span>oders
+                            </span>
+                            
+                            {/* Line 2: Apple Logo + IT Training (Increased size) */}
+                            <div className="flex items-center mt-[-4px] whitespace-nowrap"> 
+    <img 
+        src="/applelogo.png" // Adjusted to use the consistent file name
+        alt="Apple Logo" 
+        className={`
+            transition-all duration-500 mr-1
+            ${scrolled ? 'h-6' : 'h-8'} // <--- INCREASED APPLE LOGO SIZE
+        `}
+        style={{ filter: 'grayscale(0) drop-shadow(0 0 5px rgba(255, 255, 255, 0.7))' }} 
+    />
+    <span className={`
+        text-pink-400 font-semibold transition-all duration-500 
+        text-lg sm:text-xl lg:text-2xl // <--- INCREASED FONT SIZES
+        ${scrolled ? 'text-base sm:text-lg' : 'text-lg lg:text-2xl'} // Adjusted scrolled sizes
+    `}>
+        IT Training
+    </span>
+</div>
+                            
                         </Link>
 
                         {/* 2. Desktop Navigation (Pill-Shaped Buttons) */}
                         <nav className="hidden lg:block text-lg font-medium">
-                            <ul className="flex space-x-4">
+                            {/* Reduced spacing for more room on desktop */}
+                            <ul className="flex space-x-2 xl:space-x-4">
                                 {NavLinks.map(link => {
                                     const isActive = location.pathname === link.path;
                                     return (
@@ -100,7 +128,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                             <Link 
                                                 to={link.path} 
                                                 className={`
-                                                    px-4 py-2 rounded-full border border-pink-500 transition-all duration-300 text-base font-semibold
+                                                    px-3 py-2 rounded-full border border-pink-500 transition-all duration-300 text-sm lg:text-base font-semibold 
                                                     bg-purple-800/60 hover:bg-purple-700/80
                                                     transform hover:scale-[1.05] hover:shadow-pink-400/50 hover:shadow-xl
                                                     ${isActive 
@@ -233,7 +261,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                         <a href="mailto:info@monstercoders.com" className="hover:text-white transition-colors">info@monstercoders.com</a>
                                     </li>
                                     {/* Secondary Email */}
-                                     <li className="flex items-center">
+                                       <li className="flex items-center">
                                         <Mail size={18} className="text-pink-500 mr-3" />
                                         <a href="mailto:MonsterCoders@gmail.com" className="hover:text-white transition-colors">MonsterCoders@gmail.com</a>
                                     </li>

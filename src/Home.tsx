@@ -4,7 +4,7 @@ import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged }
 import { getFirestore, Firestore, collection, addDoc, onSnapshot, serverTimestamp } from 'firebase/firestore';
 
 // --- Utility Functions for Validation ---
-const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); 
+const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 const validateMobile = (mobile: string) => /^\d{10}$/.test(mobile);
 
 // Define the shape of the data for better type safety
@@ -25,8 +25,9 @@ const RegistrationCard: React.FC<{
     icon: React.ReactNode;
     animatedGradientClass: string;
     accentColor: string;
+    buttonText: string;
     onRegisterClick: (course: string) => void;
-}> = ({ title, icon, animatedGradientClass, accentColor, onRegisterClick }) => {
+}> = ({ title, icon, animatedGradientClass, accentColor, buttonText, onRegisterClick }) => {
 
     const cardRef = useRef<HTMLDivElement>(null);
 
@@ -35,8 +36,9 @@ const RegistrationCard: React.FC<{
         const card = cardRef.current;
         if (!card) return;
 
+        const rect = card.getBoundingClientRect();
+
         const handleMouseMove = (e: MouseEvent) => {
-            const rect = card.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
 
@@ -62,6 +64,11 @@ const RegistrationCard: React.FC<{
         };
     }, []);
 
+    const descriptiveQuote = title === "AI Training"
+        ? "Join our Job-Guaranteed, High-Paying AI Fast-Track Program — Limited seats available!"
+        : "Secure your future with our Job-Guaranteed Full Stack Program — your shortcut to high-paying Full Stack roles!";
+
+
     return (
         // Single Card Container with Animated Gradient Background
         <div
@@ -69,7 +76,7 @@ const RegistrationCard: React.FC<{
             className={`
                 p-4 rounded-xl shadow-2xl
                 flex flex-col items-center text-center justify-between h-full text-white
-                border-2 border-white/10 overflow-hidden
+                border-2 border-white/10 overflow-hidden relative
                 ${animatedGradientClass}
                 transition-transform duration-300 ease-out
                 transform-gpu
@@ -79,6 +86,10 @@ const RegistrationCard: React.FC<{
                 backdropFilter: 'blur(3px)'
             }}
         >
+            {/* 🚨 UPDATED: URGENCY BADGE with "HURRY UP" */}
+            <div className="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg transform rotate-3 shadow-xl z-10">
+                **HURRY UP! LIMITED SEATS!**
+            </div>
 
             <div className="flex flex-col items-center">
                 {/* Icon */}
@@ -92,35 +103,35 @@ const RegistrationCard: React.FC<{
                 </h2>
 
                 {/* Descriptive Text */}
-                <p className="mb-4 text-xs text-gray-200">
-                    Discover cutting-edge programs designed for modern industry leaders.
+                <p className="mb-4 text-sm text-gray-200 font-semibold text-center italic">
+                    {descriptiveQuote}
                 </p>
             </div>
 
-            {/* Register Button - With Enhanced Glow */}
+            {/* Register Button - Action Text: JOIN NOW/ENROLL NOW */}
             <button
                 onClick={() => onRegisterClick(title)}
                 className={`
-                    mt-auto px-4 py-2 w-full sm:w-auto
-                    bg-transparent ${accentColor} text-xs font-semibold uppercase rounded-full
+                    mt-auto px-6 py-3 w-full sm:w-auto
+                    bg-transparent ${accentColor} text-sm font-bold uppercase rounded-full
                     border-2 border-current shadow-lg shadow-current/50
                     hover:bg-current hover:text-gray-900
                     transition duration-300 transform hover:scale-105
                 `}
             >
-                Register for {title}
+                **{buttonText}**
             </button>
         </div>
     );
 }
 
-// Generic InputField component (Updated for dark theme consistency)
-const InputField: React.FC<{ 
-    label: string; 
-    name: keyof RegistrationData; 
-    type?: string; 
-    placeholder?: string; 
-    error?: string; 
+// Generic InputField component (kept unchanged for brevity)
+const InputField: React.FC<{
+    label: string;
+    name: keyof RegistrationData;
+    type?: string;
+    placeholder?: string;
+    error?: string;
     ref?: React.Ref<HTMLInputElement>;
     value: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
@@ -131,10 +142,9 @@ const InputField: React.FC<{
         </label>
         <input
             ref={ref}
-            // 🟢 Applied dark theme classes to InputField: light text, dark background
             className={`
-                shadow appearance-none border rounded w-full py-2 px-3 
-                text-gray-300 bg-gray-700 leading-tight focus:outline-none focus:ring-2 
+                shadow appearance-none border rounded w-full py-2 px-3
+                text-gray-300 bg-gray-700 leading-tight focus:outline-none focus:ring-2
                 ${error ? 'border-red-500 ring-red-500' : 'border-gray-600 focus:border-purple-500 focus:ring-purple-500'}
             `}
             id={name}
@@ -150,8 +160,7 @@ const InputField: React.FC<{
 );
 
 
-// --- Registration Form Modal Component (Refactored for compactness) ---
-// --- Registration Form Modal Component (Refactored for compactness) ---
+// --- Registration Form Modal Component (kept unchanged for brevity) ---
 const RegistrationFormModal: React.FC<{
     course: string;
     onClose: () => void;
@@ -188,7 +197,7 @@ const RegistrationFormModal: React.FC<{
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        
+
         let nextValue = value;
         if (name === 'mobile' && value.length > 10) {
             nextValue = value.slice(0, 10);
@@ -308,20 +317,20 @@ const RegistrationFormModal: React.FC<{
                     {/* Academic Details: Qualification & Year of Passing (Side by Side) */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {/* Qualification */}
-                        <InputField 
-                            label="Qualification (e.g. B.Tech)" 
-                            name="qualification" 
-                            placeholder="B.Tech, M.S." 
+                        <InputField
+                            label="Qualification (e.g. B.Tech)"
+                            name="qualification"
+                            placeholder="B.Tech, M.S."
                             value={formData.qualification}
                             onChange={handleChange}
                         />
 
                         {/* Year of Passing */}
-                        <InputField 
-                            label="Year of Passing" 
-                            name="yearOfPassing" 
-                            type="number" 
-                            placeholder="2022" 
+                        <InputField
+                            label="Year of Passing"
+                            name="yearOfPassing"
+                            type="number"
+                            placeholder="2022"
                             value={formData.yearOfPassing}
                             onChange={handleChange}
                         />
@@ -329,7 +338,7 @@ const RegistrationFormModal: React.FC<{
 
                     {/* Status & Course: Working Status & Course Select (Side by Side) */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        
+
                         {/* Working Status (Radio buttons) */}
                         <div className="mb-4">
                             <label className="block text-gray-300 text-sm font-bold mb-2">Working Status</label>
@@ -367,9 +376,9 @@ const RegistrationFormModal: React.FC<{
                             <select
                                 className="
                                     shadow border rounded w-full py-2 px-3 h-[42px] /* Adjusted height for alignment */
-                                    text-gray-300 leading-tight                       
+                                    text-gray-300 leading-tight
                                     focus:outline-none focus:ring-2
-                                    border-gray-600 bg-gray-700                       
+                                    border-gray-600 bg-gray-700
                                     focus:border-purple-500 focus:ring-purple-500
                                 "
                                 id="course"
@@ -445,8 +454,7 @@ const Home: React.FC = () => {
     const [db, setDb] = useState<Firestore | null>(null);
     const [userId, setUserId] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
-    // Removed setRegistrations and registrations state since it is no longer used
-    
+
     // Define global config variables (provided by the environment)
     const appId = typeof (window as any).__app_id !== 'undefined' ? (window as any).__app_id : 'default-app-id';
     const firebaseConfig = typeof (window as any).__firebase_config !== 'undefined' ? JSON.parse((window as any).__firebase_config) : null;
@@ -498,18 +506,14 @@ const Home: React.FC = () => {
     }, []); // Run once on mount
 
     // --- 2. REAL-TIME DATA LISTENER (FIRESTORE) ---
-    // The listener is kept to ensure Firebase connection stability, but removed the complex array setup.
-    // The data fetching part is simplified as it is no longer used for display or export.
     useEffect(() => {
         if (!db || !userId) return;
 
         const registrationsCollectionPath = `artifacts/${appId}/public/data/registrations`;
         const q = collection(db, registrationsCollectionPath);
 
-       const unsubscribe = onSnapshot(q, (_) => { // Changed 'snapshot' to '_'
+       const unsubscribe = onSnapshot(q, (_) => {
             // Data is fetched but not processed or stored in state anymore
-            // The listener ensures the database state is ready for saving documents.
-            // Keeping it simple to avoid TS unused variable warnings.
         }, (error) => {
             console.error("Firestore listener failed:", error);
         });
@@ -520,8 +524,7 @@ const Home: React.FC = () => {
     // --- 3. SAVE FUNCTION (FIRESTORE) ---
     const saveRegistration = async (data: RegistrationData) => {
         if (!db || !userId) {
-            // Home.tsx(531,19)
-            throw new Error("Database not ready."); 
+            throw new Error("Database not ready.");
         }
         const registrationsCollectionPath = `artifacts/${appId}/public/data/registrations`;
         const collectionRef = collection(db, registrationsCollectionPath);
@@ -530,7 +533,6 @@ const Home: React.FC = () => {
         console.log("Document successfully written!");
     };
 
-    // The handleExportToCSV function has been deleted.
 
     const openModal = (course: string) => {
         setSelectedCourse(course);
@@ -542,11 +544,16 @@ const Home: React.FC = () => {
         setSelectedCourse('');
     };
 
-    // Card styling details
-    const aiAccent = "text-fuchsia-400";
-    const aiAnimatedGradientClass = "ai-shift-gradient animate-gradient-shift";
-    const fullstackAccent = "text-lime-300";
-    const fullstackAnimatedGradientClass = "fs-shift-gradient animate-gradient-shift";
+    // --- CARD STYLING DETAILS (Contrasting Colors) ---
+
+    // AI Training: Deep Purple/Blue with Bright Teal accent
+    const aiAccent = "text-teal-300";
+    const aiAnimatedGradientClass = "ai-final-gradient animate-gradient-shift";
+
+    // Full Stack: Warm Orange/Pink with Vibrant Red accent
+    const fullstackAccent = "text-red-400";
+    const fullstackAnimatedGradientClass = "fs-final-gradient animate-gradient-shift";
+
     const AIIcon = <span role="img" aria-label="AI Chip" className="text-4xl">🧠</span>;
     const FullStackIcon = <span role="img" aria-label="Code Brackets" className="text-4xl">💻</span>;
 
@@ -562,52 +569,48 @@ const Home: React.FC = () => {
 
     return (
         <>
-            {/* Standard <style> tag now contains all the custom CSS for the gradient animation */}
             <style>{`
-                /* Base Gradient Definition (AI Card) */
-                .ai-shift-gradient {
-                    /* Charcoal Black -> Cyber Pink -> Electric Blue */
-                    background: linear-gradient(135deg, #18181b, #be185d, #3b82f6, #18181b);
-                    background-size: 300% 300%;
-                }
-                /* Base Gradient Definition (Fullstack Card) */
-                .fs-shift-gradient {
-                    /* Deep Teal -> Electric Lime -> Navy Blue */
-                    background: linear-gradient(135deg, #0d9488, #a3e635, #1e40af, #0d9488);
+                /* AI Training Card: Deep Purple, Electric Blue, and Dark Gray */
+                .ai-final-gradient {
+                    background: linear-gradient(135deg, #3b0764, #1e40af, #374151, #3b0764);
                     background-size: 300% 300%;
                 }
 
-                /* Keyframes for the shift animation */
+                /* Full Stack Card: Burnt Orange, Hot Pink, and Dark Gray */
+                .fs-final-gradient {
+                    background: linear-gradient(135deg, #ea580c, #be185d, #374151, #ea580c);
+                    background-size: 300% 300%;
+                }
+
+                /* Keyframes for the shift animation (reused) */
                 @keyframes gradientShift {
                     0% { background-position: 0% 50%; }
                     50% { background-position: 100% 50%; }
                     100% { background-position: 0% 50%; }
                 }
 
-                /* Animation Class */
+                /* Animation Class (reused) */
                 .animate-gradient-shift {
                     animation: gradientShift 10s ease infinite;
                 }
             `}</style>
 
-            {/* Outer container ensures all content is centered and takes up full width */}
             <div className="flex flex-col items-center pt-8 pb-12 w-full container mx-auto px-4">
 
-                {/* The User ID display and Export CSV button have been removed from the UI. */}
-
-                {/* --- 1. Card 1: AI Training (Placed Above Video) --- */}
-                <section className="mt-4 mb-6 w-half max-w-xl h-48">
+                {/* --- 1. Card 1: AI Training (JOIN NOW) --- */}
+                <section className="mt-4 mb-6 w-half max-w-xl min-h-[220px]">
                     <RegistrationCard
                         title="AI Training"
                         icon={AIIcon}
                         animatedGradientClass={aiAnimatedGradientClass}
                         accentColor={aiAccent}
+                        buttonText="JOIN NOW" 
                         onRegisterClick={openModal}
                     />
                 </section>
 
-                {/* 2. Main Video Card */}
-                <section className="flex justify-center py-0 w-full">
+                {/* 2. Main Video Card (Kept original Purple/Pink border) */}
+                <section className="flex justify-center py-0 w-full relative">
                     <div
                         className="
                             p-0 shadow-2xl rounded-3xl w-full max-w-4xl
@@ -615,6 +618,7 @@ const Home: React.FC = () => {
                             transform transition duration-500
                             hover:scale-[1.02] hover:shadow-purple-500/50
                             bg-gradient-to-r from-purple-700 via-pink-600 to-purple-700 p-1
+                            relative
                         "
                     >
                         <video
@@ -628,16 +632,20 @@ const Home: React.FC = () => {
                             <source src="/aiii.mp4" type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
+                        {/* Overlay with MonsterCoders text and logo */}
+                        
                     </div>
                 </section>
 
-                {/* --- 3. Card 2: Java/Python Fullstack (Placed Below Video) --- */}
-                <section className="mt-6 mb-4 w-half max-w-xl h-48">
+
+                {/* --- 3. Card 2: Java/Python Fullstack (ENROLL NOW) --- */}
+                <section className="mt-6 mb-4 w-half max-w-xl min-h-[220px]">
                     <RegistrationCard
                         title="Java/Python Fullstack"
                         icon={FullStackIcon}
                         animatedGradientClass={fullstackAnimatedGradientClass}
                         accentColor={fullstackAccent}
+                        buttonText="ENROLL NOW"
                         onRegisterClick={openModal}
                     />
                 </section>

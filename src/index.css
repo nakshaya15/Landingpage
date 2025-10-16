@@ -1,3 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.bg-size-200 {
+  background-size: 200% auto; /* Make the gradient wider than the element */
+}
