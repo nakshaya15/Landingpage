@@ -27,8 +27,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     // If running without React Router, this hook might throw an error. 
-    // You may need to mock this behavior if testing as a standalone component.
-    // We keep it as provided by the user.
+    // You may need to mock this behavior if testing as a standalone component.
+    // We keep it as provided by the user.
     const location = useLocation();
 
     // Effect to handle scroll-based dynamic header styling
@@ -84,7 +84,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 
                 {/* Header (Dynamic based on scroll) */}
                 <header className={`
-                    text-white sticky top-0 z-50 transition-all duration-500 ease-in-out 
+                    text-white sticky top-0 **z-60** transition-all duration-500 ease-in-out // 💡 FIX 1: Increased z-index to 60 (above the menu z-50)
                     ${headerClasses}
                 `}>
                     <div className="container mx-auto flex justify-between items-center px-4">
@@ -155,6 +155,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                 className="text-white hover:text-pink-400 p-2 rounded-md transition duration-300 focus:outline-none"
                                 aria-label="Toggle menu"
                             >
+                                {/* The menu button is now z-60 from the header, so it will show up */}
                                 {isMenuOpen ? <X size={30} className="animate-spin-once" /> : <Menu size={30} />}
                             </button>
                         </div>
@@ -164,15 +165,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 {/* 4. Mobile Menu Overlay (Enhanced Animation & SCROLLABLE FIX) */}
                 <div 
                     className={`
-                        fixed top-0 right-0 h-full w-64 bg-purple-900/95 backdrop-blur-md z-40 shadow-2xl 
+                        fixed **top-[5.5rem]** right-0 **h-[calc(100vh-5.5rem)]** w-64 bg-purple-900/95 backdrop-blur-md **z-50** shadow-2xl // 💡 FIX 2 & 3: Menu starts below header, and height is adjusted. z-index 50 is fine.
                         transition-all duration-500 ease-in-out
-                        lg:hidden pt-20 overflow-y-auto // <--- FIX APPLIED HERE
+                        lg:hidden overflow-y-auto // 💡 FIX 4: Removed unnecessary pt-20
                         ${isMenuOpen 
                             ? 'translate-x-0 opacity-100 scale-100' 
                             : 'translate-x-full opacity-0 scale-95 pointer-events-none'}
                     `}
                 >
-                    <nav className="flex flex-col p-4 space-y-2">
+                    <nav className="flex flex-col p-4 space-y-2"> // 💡 Added p-4 padding here for content spacing
                         {NavLinks.map(link => (
                             <Link
                                 key={link.name}
