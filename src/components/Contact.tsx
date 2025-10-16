@@ -1,18 +1,46 @@
-// src/components/Contact.tsx
-import React from 'react';
-import { Mail, Phone, MapPin, Send, Globe } from 'lucide-react'; 
+import React, { useState } from 'react'; 
+import { Mail, Phone, MapPin, Send, Globe, Youtube, Facebook } from 'lucide-react'; 
 
 const Contact: React.FC = () => {
-    
+    // State for form submission message (replaces alert())
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
     // Placeholder function for form submission
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        alert("Thank you for your inquiry! We'll get back to you shortly.");
+        // **REPLACED ALERT() with state update for UI notification**
+        setIsSubmitted(true);
+        
+        // Hide the message after 5 seconds
+        setTimeout(() => {
+            setIsSubmitted(false);
+        }, 5000); 
+
+        // Placeholder for actual form reset or API submission logic
+        console.log("Form submitted. Using state-based success message.");
+        (e.target as HTMLFormElement).reset(); // Reset form fields
     };
 
     // THIS IS THE CORRECT, FULLY FUNCTIONAL EMBED URL FOR MANJEERA TRINITY CORPORATE
     const mapEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.279624898732!2d78.39003107503794!3d17.48924198357774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc91060965e6d63%3A0x868b136511b84958!2sManjeera%20Trinity%20Corporate!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin";
 
+    // MonsterCoders Social Links (UPDATED: YouTube and Facebook only)
+    const socialLinks = [
+        { 
+            name: "YouTube Channel", 
+            icon: Youtube, 
+            href: "https://www.youtube.com/@MonsterCodersIT", 
+            color: "text-red-400", 
+            label: "MonsterCoders on YouTube"
+        },
+        { 
+            name: "Facebook Page", 
+            icon: Facebook, 
+            href: "https://www.facebook.com/MonsterCodersIT", 
+            color: "text-blue-400", 
+            label: "MonsterCoders on Facebook"
+        },
+    ];
 
     return (
         <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-gray-100" id="contact">
@@ -29,9 +57,21 @@ const Contact: React.FC = () => {
                     
                     {/* LEFT SECTION (Columns 1-3): The Contact Form */}
                     <div className="lg:col-span-3">
+                        {/* Success Message Notification (Replaces alert()) */}
+                        {isSubmitted && (
+                            <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-xl shadow-lg flex items-center justify-between transition-all duration-500">
+                                <p className='font-semibold'>
+                                    Thank you for your **Inquiry**! We'll get back to you shortly.
+                                </p>
+                                <button onClick={() => setIsSubmitted(false)} className="ml-4 text-green-700 hover:text-green-900 font-bold">
+                                    &times;
+                                </button>
+                            </div>
+                        )}
+
                         <div 
                             className="p-10 bg-white rounded-2xl shadow-2xl border-t-8 border-pink-600 
-                                       transform transition duration-500 hover:shadow-pink-400/50 hover:scale-[1.01]"
+                                         transform transition duration-500 hover:shadow-pink-400/50 hover:scale-[1.01]"
                         >
                             <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center">
                                 <Send size={32} className="mr-3 text-pink-600" /> Start Your Transformation
@@ -59,7 +99,7 @@ const Contact: React.FC = () => {
                                 <div>
                                     <label htmlFor="message" className="block text-sm font-medium text-gray-700">Tell Us About Your Goals</label>
                                     <textarea id="message" name="message" rows={4} required 
-                                              className="mt-1 block w-full px-4 py-2 border-2 border-gray-200 rounded-lg shadow-inner focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"></textarea>
+                                             className="mt-1 block w-full px-4 py-2 border-2 border-gray-200 rounded-lg shadow-inner focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"></textarea>
                                 </div>
                                 <button 
                                     type="submit" 
@@ -84,7 +124,7 @@ const Contact: React.FC = () => {
                                 allowFullScreen={true} 
                                 loading="lazy" 
                                 referrerPolicy="no-referrer-when-downgrade"
-                                title="Segment Spaces on Google Maps"
+                                title="Manjeera Trinity Corporate on Google Maps" 
                             ></iframe>
                         </div>
 
@@ -124,12 +164,31 @@ const Contact: React.FC = () => {
                                     </p>
                                 </div>
                                 
-                                
                                 {/* Website */}
                                 <p className="flex items-center text-lg">
                                     <Globe size={20} className="mr-3 text-pink-400 flex-shrink-0" />
                                     <a href="http://www.monstercoders.com" target="_blank" rel="noopener noreferrer" className="hover:text-pink-200 transition duration-300 underline">www.monstercoders.com</a>
                                 </p>
+
+                                {/* UPDATED: Social Media Links (YouTube and Facebook only) */}
+                                <div className="pt-4 border-t border-indigo-600 mt-4">
+                                    <h3 className="text-xl font-bold mb-3">Follow MonsterCoders</h3>
+                                    <div className="flex space-x-6">
+                                        {socialLinks.map((link) => (
+                                            <a 
+                                                key={link.name} 
+                                                href={link.href} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                title={link.label}
+                                                className={`text-white hover:text-pink-400 transition-colors transform hover:scale-110`}
+                                            >
+                                                <link.icon size={30} className={link.color} /> 
+                                            </a>
+                                        ))}
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
