@@ -22,6 +22,7 @@ const Contact: React.FC = () => {
     };
 
     // Placeholder for a map embed URL (replace with your actual Google Maps embed code URL)
+    // NOTE: This URL is still a placeholder and will not load a real map.
     const mapEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.2891907716167!2d78.3970729759363!3d17.450379983471017!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc9103c81e9f45d%3A0xf6039572b834e56c!2sManjeera%20Trinity%20Corporate!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin";
 
 
@@ -51,16 +52,18 @@ const Contact: React.FC = () => {
     ];
 
     return (
-        <div className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-gray-100" id="contact">
+        // Adjusted padding for better overall mobile fit (from py-20 to py-16)
+        <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 bg-gray-100" id="contact">
             <div className="max-w-6xl mx-auto">
                 
-                <h1 className="text-5xl font-extrabold text-purple-800 text-center mb-4">
+                <h1 className="text-4xl sm:text-5xl font-extrabold text-purple-800 text-center mb-4">
                     Connect with the Vision
                 </h1>
-                <p className="text-xl font-light text-gray-600 text-center mb-12 border-b-2 border-pink-500 pb-2 inline-block mx-auto block">
+                <p className="text-base sm:text-xl font-light text-gray-600 text-center mb-10 border-b-2 border-pink-500 pb-2 inline-block mx-auto block">
                     Ready to transform your career? Let’s start the conversation.
                 </p>
 
+                {/* Grid remains simple for mobile, stacking naturally */}
                 <div className="grid lg:grid-cols-5 gap-10">
                     
                     {/* LEFT SECTION (Columns 1-3): The Contact Form */}
@@ -78,10 +81,10 @@ const Contact: React.FC = () => {
                         )}
 
                         <div 
-                            className="p-10 bg-white rounded-2xl shadow-2xl border-t-8 border-pink-600 
-                                     transform transition duration-500 hover:shadow-pink-400/50 hover:scale-[1.01]"
+                            className="p-6 sm:p-10 bg-white rounded-2xl shadow-2xl border-t-8 border-pink-600 
+                                transform transition duration-500 hover:shadow-pink-400/50 hover:scale-[1.01]"
                         >
-                            <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+                            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 flex items-center">
                                 <Send size={32} className="mr-3 text-pink-600" /> Start Your Transformation
                             </h2>
                             
@@ -107,7 +110,7 @@ const Contact: React.FC = () => {
                                 <div>
                                     <label htmlFor="message" className="block text-sm font-medium text-gray-700">Tell Us About Your Goals</label>
                                     <textarea id="message" name="message" rows={4} required 
-                                             className="mt-1 block w-full px-4 py-2 border-2 border-gray-200 rounded-lg shadow-inner focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"></textarea>
+                                            className="mt-1 block w-full px-4 py-2 border-2 border-gray-200 rounded-lg shadow-inner focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"></textarea>
                                 </div>
                                 <button 
                                     type="submit" 
@@ -124,6 +127,7 @@ const Contact: React.FC = () => {
                         
                         {/* Map Embed */}
                         <div className="rounded-2xl overflow-hidden shadow-xl border-2 border-gray-300 h-64 lg:h-80 transition duration-500 hover:shadow-indigo-300/80">
+                            {/* The iframe should inherently scale, but specifying width/height helps */}
                             <iframe 
                                 src={mapEmbedUrl}
                                 width="100%" 
@@ -143,45 +147,44 @@ const Contact: React.FC = () => {
                             </h2>
                             <div className="space-y-3">
                                 
-                                {/* Address */}
-                                <p className="flex items-start text-lg">
+                                {/* Address (Reduced font size to text-base and added 'break-words' for wrapping) */}
+                                <p className="flex items-start text-base sm:text-lg">
                                     <MapPin size={20} className="mr-3 mt-1 text-pink-400 flex-shrink-0" />
-                                    <span className='font-medium'>
+                                    <span className='font-medium break-words'> 
                                         Manjeera Trinity Corporate, 206, JNTU Rd, K P H B Phase 3, Kukatpally, Hyderabad, Telangana 500072
                                     </span>
                                 </p>
 
                                 {/* Phone */}
-                                <p className="flex items-center text-lg">
+                                <p className="flex items-center text-base sm:text-lg">
                                     <Phone size={20} className="mr-3 text-pink-400 flex-shrink-0" />
                                     <strong className="text-yellow-300">+91 824 7707 851</strong>
                                 </p>
                                 
                                 {/* Emails */}
                                 <div className="space-y-1"> 
-                                    {/* Primary Email */}
-                                    <p className="flex items-center text-lg">
+                                    {/* Primary Email (Reduced font size to text-base) */}
+                                    <p className="flex items-center text-base sm:text-lg">
                                         <Mail size={20} className="mr-3 text-pink-400 flex-shrink-0" />
-                                        <a href="mailto:info@monstercoders.com" className="hover:text-pink-200 transition duration-300 underline">info@monstercoders.com</a>
+                                        <a href="mailto:info@monstercoders.com" className="hover:text-pink-200 transition duration-300 underline break-all">info@monstercoders.com</a>
                                     </p>
-                                    {/* Secondary Email */}
-                                    <p className="flex items-center text-lg">
+                                    {/* Secondary Email (Reduced font size to text-base) */}
+                                    <p className="flex items-center text-base sm:text-lg">
                                         {/* Spacer to align with the text above */}
                                         <div className="w-5 mr-3 flex-shrink-0" /> 
-                                        <a href="mailto:monstercoders@gmail.com" className="hover:text-pink-200 transition duration-300 underline">monstercoders@gmail.com</a>
+                                        <a href="mailto:monstercoders@gmail.com" className="hover:text-pink-200 transition duration-300 underline break-all">monstercoders@gmail.com</a>
                                     </p>
                                 </div>
                                 
                                 {/* Website */}
-                                <p className="flex items-center text-lg">
+                                <p className="flex items-center text-base sm:text-lg">
                                     <Globe size={20} className="mr-3 text-pink-400 flex-shrink-0" />
-                                    <a href="http://www.monstercoders.com" target="_blank" rel="noopener noreferrer" className="hover:text-pink-200 transition duration-300 underline">www.monstercoders.com</a>
+                                    <a href="http://www.monstercoders.com" target="_blank" rel="noopener noreferrer" className="hover:text-pink-200 transition duration-300 underline break-all">www.monstercoders.com</a>
                                 </p>
 
-                                {/* MODIFIED: Social Media Links (Showing Icons AND URLs) */}
+                                {/* MODIFIED: Social Media Links (Applied break-all to long URLs) */}
                                 <div className="pt-4 border-t border-indigo-600 mt-4">
-                                    <h3 className="text-xl font-bold mb-3">Follow MonsterCoders</h3>
-                                    {/* Use space-y-3 to stack the links vertically */}
+                                    <h3 className="text-lg sm:text-xl font-bold mb-3">Follow MonsterCoders</h3>
                                     <div className="space-y-3"> 
                                         {socialLinks.map((link) => (
                                             <a 
@@ -190,13 +193,13 @@ const Contact: React.FC = () => {
                                                 target="_blank" 
                                                 rel="noopener noreferrer"
                                                 title={link.label}
-                                                // Use flex to align icon and text horizontally
-                                                className="flex items-center text-white hover:text-pink-200 transition duration-300 underline"
+                                                // Added break-all to force URL to wrap, and ensured smaller text size
+                                                className="flex items-center text-sm text-white hover:text-pink-200 transition duration-300 underline"
                                             >
                                                 {/* ICON */}
-                                                <link.icon size={20} className={`mr-3 flex-shrink-0 ${link.color}`} /> 
-                                                {/* URL TEXT - Using 'truncate' to prevent overflow in smaller containers */}
-                                                <span className='truncate'>
+                                                <link.icon size={18} className={`mr-2 flex-shrink-0 ${link.color}`} /> 
+                                                {/* URL TEXT - Replaced 'truncate' with 'break-all' for proper wrapping on small screens */}
+                                                <span className='break-all'>
                                                     {link.href}
                                                 </span>
                                             </a>
