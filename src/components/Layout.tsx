@@ -18,24 +18,6 @@ const NavLinks = [
     { name: 'Clients', path: '/clients' },
 ];
 
-const SocialLinks = [
-    { 
-        icon: Facebook, 
-        href: "https://www.facebook.com/profile.php?id=61565345426571", 
-        label: "https://www.facebook.com/profile.php?id=61565345426571"
-    },
-    { 
-        icon: Instagram, 
-        href: "https://www.instagram.com/monstercoders_official/", 
-        label: "https://www.instagram.com/monstercoders_official/"
-    },
-    { 
-        icon: Youtube, 
-        href: "https://youtube.com/@monstercoderssoftwaretrainin?si=Ru6wIwriAfcWovhq", 
-        label: "https://youtube.com/@monstercoderssoftwaretrainin?si=Ru6wIwriAfcWovhq"
-    },
-];
-
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -88,7 +70,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     // Adjusted logo size class (SLIGHTLY REDUCED DEFAULT SIZE)
     const logoSize = scrolled 
         ? 'text-3xl lg:text-4xl' 
-        : 'text-3xl lg:text-4xl'; // Default is now text-3xl/lg:text-4xl (was 4xl/5xl)
+        : 'text-3xl lg:text-4xl'; 
         
     // --- Render ---
     return (
@@ -118,20 +100,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     text-white sticky top-0 z-60 transition-all duration-500 ease-in-out
                     ${headerClasses}
                 `}>
-                    {/* MODIFIED: Added 'space-x-8' and changed 'justify-between' to give the logo more breathing room on the left */}
-                    <div className="container mx-auto flex justify-start items-center px-4 space-x-8"> 
+                    {/* FINAL HEADER FIX: Ensures no overlap and wide separation between logo and navigation */}
+                    <div className="container mx-auto flex justify-start items-center px-4 space-x-8 xl:space-x-12"> 
                         
                         {/* 1. Logo/Brand */}
                         <Link to="/" className={`
                             font-extrabold tracking-wide text-white transition-all duration-500 flex flex-col items-center min-w-0 
                         `}>
                             
-                            {/* Line 1: MonsterCoders (Uses SLIGHTLY REDUCED logoSize variable) */}
+                            {/* Line 1: MonsterCoders */}
                             <span className={logoSize}>
                                 <span className="text-pink-500">M</span>onster<span className="text-pink-500">C</span>oders
                             </span>
                             
-                            {/* Line 2: Apple Logo + IT Training (Adjusted for new logo size) */}
+                            {/* Line 2: Apple Logo + IT Training */}
                             <div className="flex items-center mt-[-4px] whitespace-nowrap"> 
                                 <img 
                                     src="/applelogo.png"
@@ -153,10 +135,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             
                         </Link>
 
-                        {/* 2. Desktop Navigation (Alignment Fixes & now takes up the remaining space) */}
+                        {/* 2. Desktop Navigation (Alignment & Spacing) */}
                         <nav className="hidden lg:block text-lg font-medium flex-grow">
-                            {/* FIX 1: Added 'items-center' to vertically align all links */}
-                            {/* NOTE: We removed space-x-2/xl:space-x-4 from the ul and added 'space-x-2' to the li's for more consistent padding */}
+                            {/* Uses justify-end and ensures single-line buttons */}
                             <ul className="flex justify-end items-center"> 
                                 {NavLinks.map(link => {
                                     // Active link logic
@@ -168,12 +149,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                         <li key={link.name}>
                                             <Link 
                                                 to={link.path} 
-                                                // FIX 2: Added 'whitespace-nowrap' to prevent text wrapping
                                                 className={`
                                                     px-3 py-2 rounded-full border border-pink-500 transition-all duration-300 text-sm lg:text-base font-semibold 
                                                     bg-purple-800/60 hover:bg-purple-700/80
                                                     transform hover:scale-[1.05] hover:shadow-pink-400/50 hover:shadow-xl
-                                                    whitespace-nowrap ml-2 // Added ml-2 for horizontal separation
+                                                    whitespace-nowrap ml-2 // Ensures no wrapping and separation
                                                     ${isActive 
                                                         ? 'bg-pink-600 text-white border-pink-400 scale-[1.02] shadow-pink-500/70 shadow-lg' 
                                                         : 'text-gray-200'}
@@ -190,7 +170,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         {/* 3. Mobile Menu Button */}
                         <div className="lg:hidden">
                             <button
-                                onClick={toggleMenu} // Use the toggle function here
+                                onClick={toggleMenu} 
                                 className="text-white hover:text-pink-400 p-2 rounded-md transition duration-300 focus:outline-none"
                                 aria-label="Toggle menu"
                             >
@@ -200,7 +180,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     </div>
                 </header>
 
-                {/* Mobile Menu Backdrop (Clicking this closes the menu) */}
+                {/* Mobile Menu Backdrop */}
                 {isMenuOpen && (
                     <div 
                         className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
@@ -210,7 +190,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 )}
 
 
-                {/* 4. Mobile Menu Overlay (FIXED POSITIONING) */}
+                {/* 4. Mobile Menu Overlay */}
                 <div 
                     className={`
                         fixed top-0 right-0 h-full w-64 bg-purple-900/95 backdrop-blur-md z-50 shadow-2xl 
@@ -221,7 +201,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             : 'translate-x-full opacity-0 scale-95 pointer-events-none'}
                     `}
                 >
-                    {/* Added: Close button inside the menu */}
+                    {/* Close button inside the menu */}
                     <div className="flex justify-end p-4">
                         <button
                             onClick={closeMenu}
@@ -270,12 +250,32 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     Pioneering the future of tech education with cutting-edge curricula and real-world projects.
                                 </p>
                                 
-                                {/* Social Links */}
-                                <div className="flex space-x-3 mt-6">
-                                    <a href="https://www.facebook.com/profile.php?id=61565345426571" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-pink-500 hover:text-white transition-colors"><Facebook size={24} /></a>
-                                    <a href="https://www.instagram.com/monstercoders_official/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-pink-500 hover:text-white transition-colors"><Instagram size={24} /></a>
-                                    <a href="https://youtube.com/@monstercoderssoftwaretrainin?si=Ru6wIwriAfcWovhq" target="_blank" rel="noopener noreferrer" aria-label="Youtube" className="text-pink-500 hover:text-white transition-colors"><Youtube size={24} /></a>
-                                    <a href="www.monstercoders.com" target="_blank" rel="noopener noreferrer" aria-label="Website" className="text-pink-500 hover:text-white transition-colors"><Globe size={24} /></a>
+                                {/* FOOTER SOCIAL LINKS: ALIGNED ICONS + FULL VISIBLE URLS with WHITE default, PINK hover */}
+                                <div className="flex flex-col space-y-3 mt-6 text-sm">
+                                    
+                                    {/* Facebook */}
+                                    <a href="https://www.facebook.com/profile.php?id=61565345426571" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="flex items-start text-white hover:text-pink-500 transition-colors">
+                                        <Facebook size={18} className="mr-2 flex-shrink-0 mt-1" />
+                                        <span className="break-all">https://www.facebook.com/profile.php?id=61565345426571</span>
+                                    </a>
+                                    
+                                    {/* Instagram */}
+                                    <a href="https://www.instagram.com/monstercoders_official/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="flex items-start text-white hover:text-pink-500 transition-colors">
+                                        <Instagram size={18} className="mr-2 flex-shrink-0 mt-1" />
+                                        <span className="break-all">https://www.instagram.com/monstercoders_official/</span>
+                                    </a>
+                                    
+                                    {/* Youtube */}
+                                    <a href="https://youtube.com/@monstercoderssoftwaretrainin?si=Ru6wIwriAfcWovhq" target="_blank" rel="noopener noreferrer" aria-label="Youtube" className="flex items-start text-white hover:text-pink-500 transition-colors">
+                                        <Youtube size={18} className="mr-2 flex-shrink-0 mt-1" />
+                                        <span className="break-all">https://youtube.com/@monstercoderssoftwaretrainin?si=Ru6wIwriAfcWovhq</span>
+                                    </a>
+                                    
+                                    {/* Website/Globe */}
+                                    <a href="http://www.monstercoders.com" target="_blank" rel="noopener noreferrer" aria-label="Website" className="flex items-start text-white hover:text-pink-500 transition-colors">
+                                        <Globe size={18} className="mr-2 flex-shrink-0 mt-1" />
+                                        <span className="break-all">http://www.monstercoders.com</span>
+                                    </a>
                                 </div>
                             </div>
                             
@@ -308,7 +308,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                 </ul>
                             </div>
 
-                            {/* Contact Info (Updated) */}
+                            {/* Contact Info */}
                             <div>
                                 <h4 className="text-xl font-semibold text-pink-400 mb-4 border-b-2 border-pink-500/50 pb-1 inline-block">
                                     Connect
