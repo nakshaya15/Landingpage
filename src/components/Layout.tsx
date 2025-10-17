@@ -100,74 +100,76 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     text-white sticky top-0 z-60 transition-all duration-500 ease-in-out
                     ${headerClasses}
                 `}>
-                    {/* FINAL HEADER FIX: Ensures no overlap and wide separation between logo and navigation */}
-                    <div className="container mx-auto flex justify-start items-center px-4 space-x-8 xl:space-x-12"> 
+                    {/* FIXED: Uses justify-between to push the menu button to the far right on mobile. */}
+                    <div className="container mx-auto flex justify-between items-center px-4"> 
                         
-                        {/* 1. Logo/Brand */}
-                        <Link to="/" className={`
-                            font-extrabold tracking-wide text-white transition-all duration-500 flex flex-col items-center min-w-0 
-                        `}>
-                            
-                            {/* Line 1: MonsterCoders */}
-                            <span className={logoSize}>
-                                <span className="text-pink-500">M</span>onster<span className="text-pink-500">C</span>oders
-                            </span>
-                            
-                            {/* Line 2: Apple Logo + IT Training */}
-                            <div className="flex items-center mt-[-4px] whitespace-nowrap"> 
-                                <img 
-                                    src="/applelogo.png"
-                                    alt="Apple Logo" 
-                                    className={`
-                                        transition-all duration-500 mr-1
-                                        ${scrolled ? 'h-5' : 'h-6'} 
-                                    `}
-                                    style={{ filter: 'grayscale(0) drop-shadow(0 0 5px rgba(255, 255, 255, 0.7))' }} 
-                                />
-                                <span className={`
-                                    text-pink-400 font-semibold transition-all duration-500 
-                                    text-base sm:text-lg lg:text-xl 
-                                    ${scrolled ? 'text-sm sm:text-base' : 'text-base lg:text-xl'} 
-                                `}>
-                                    apple in IT Training
+                        {/* 1. Logo/Brand and Desktop Navigation Wrapper */}
+                        <div className="flex items-center space-x-8 xl:space-x-12">
+                            <Link to="/" className={`
+                                font-extrabold tracking-wide text-white transition-all duration-500 flex flex-col items-center min-w-0 
+                            `}>
+                                
+                                {/* Line 1: MonsterCoders */}
+                                <span className={logoSize}>
+                                    <span className="text-pink-500">M</span>onster<span className="text-pink-500">C</span>oders
                                 </span>
-                            </div>
-                            
-                        </Link>
+                                
+                                {/* Line 2: Apple Logo + IT Training */}
+                                <div className="flex items-center mt-[-4px] whitespace-nowrap"> 
+                                    <img 
+                                        src="/applelogo.png"
+                                        alt="Apple Logo" 
+                                        className={`
+                                            transition-all duration-500 mr-1
+                                            ${scrolled ? 'h-5' : 'h-6'} 
+                                        `}
+                                        style={{ filter: 'grayscale(0) drop-shadow(0 0 5px rgba(255, 255, 255, 0.7))' }} 
+                                    />
+                                    <span className={`
+                                        text-pink-400 font-semibold transition-all duration-500 
+                                        text-base sm:text-lg lg:text-xl 
+                                        ${scrolled ? 'text-sm sm:text-base' : 'text-base lg:text-xl'} 
+                                    `}>
+                                        apple in IT Training
+                                    </span>
+                                </div>
+                                
+                            </Link>
 
-                        {/* 2. Desktop Navigation (Alignment & Spacing) */}
-                        <nav className="hidden lg:block text-lg font-medium flex-grow">
-                            {/* Uses justify-end and ensures single-line buttons */}
-                            <ul className="flex justify-end items-center"> 
-                                {NavLinks.map(link => {
-                                    // Active link logic
-                                    const isActive = link.path === '/' 
-                                        ? location.pathname === '/' 
-                                        : location.pathname.startsWith(link.path);
-                                        
-                                    return (
-                                        <li key={link.name}>
-                                            <Link 
-                                                to={link.path} 
-                                                className={`
-                                                    px-3 py-2 rounded-full border border-pink-500 transition-all duration-300 text-sm lg:text-base font-semibold 
-                                                    bg-purple-800/60 hover:bg-purple-700/80
-                                                    transform hover:scale-[1.05] hover:shadow-pink-400/50 hover:shadow-xl
-                                                    whitespace-nowrap ml-2 // Ensures no wrapping and separation
-                                                    ${isActive 
-                                                        ? 'bg-pink-600 text-white border-pink-400 scale-[1.02] shadow-pink-500/70 shadow-lg' 
-                                                        : 'text-gray-200'}
-                                                `}
-                                            >
-                                                {link.name}
-                                            </Link>
-                                        </li>
-                                    );
-                                })}
-                            </ul>
-                        </nav>
+                            {/* 2. Desktop Navigation */}
+                            <nav className="hidden lg:block text-lg font-medium flex-grow">
+                                {/* Uses justify-end and ensures single-line buttons */}
+                                <ul className="flex justify-end items-center"> 
+                                    {NavLinks.map(link => {
+                                        // Active link logic
+                                        const isActive = link.path === '/' 
+                                            ? location.pathname === '/' 
+                                            : location.pathname.startsWith(link.path);
+                                            
+                                        return (
+                                            <li key={link.name}>
+                                                <Link 
+                                                    to={link.path} 
+                                                    className={`
+                                                        px-3 py-2 rounded-full border border-pink-500 transition-all duration-300 text-sm lg:text-base font-semibold 
+                                                        bg-purple-800/60 hover:bg-purple-700/80
+                                                        transform hover:scale-[1.05] hover:shadow-pink-400/50 hover:shadow-xl
+                                                        whitespace-nowrap ml-2 // Ensures no wrapping and separation
+                                                        ${isActive 
+                                                            ? 'bg-pink-600 text-white border-pink-400 scale-[1.02] shadow-pink-500/70 shadow-lg' 
+                                                            : 'text-gray-200'}
+                                                    `}
+                                                >
+                                                    {link.name}
+                                                </Link>
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+                            </nav>
+                        </div>
 
-                        {/* 3. Mobile Menu Button */}
+                        {/* 3. Mobile Menu Button (Pushed to the far right by justify-between) */}
                         <div className="lg:hidden">
                             <button
                                 onClick={toggleMenu} 
