@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom';
 // Included necessary icons
-import { Menu, X, MapPin, Mail, Phone,  Instagram, Youtube, Facebook } from 'lucide-react'; 
+import { Menu, X, MapPin, Mail, Phone, Instagram, Youtube, Facebook } from 'lucide-react'; 
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -40,7 +40,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [scrolled, setScrolled] = useState(false);
     const location = useLocation();
 
-    // Effect to handle scroll-based dynamic header styling
+    // Function to close the menu after a link is clicked or by external action
+    const closeMenu = () => setIsMenuOpen(false);
+    // Function to toggle the menu (for the main button)
+    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+    // Effect to handle scroll-based dynamic header styling (Your existing code)
     useEffect(() => {
         const handleScroll = () => {
             const isScrolled = window.scrollY > 80;
@@ -55,10 +60,24 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         };
     }, [scrolled]);
     
-    // Function to close the menu after a link is clicked or by external action
-    const closeMenu = () => setIsMenuOpen(false);
-    // Function to toggle the menu (for the main button)
-    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+    // 💡 NEW EFFECT: Handle 'Escape' key press to close the menu
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape' && isMenuOpen) {
+                closeMenu();
+            }
+        };
+
+        // Add event listener only when the menu is open
+        if (isMenuOpen) {
+            document.addEventListener('keydown', handleKeyDown);
+        }
+
+        // Cleanup function
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isMenuOpen]); // Re-run effect when the menu state changes
 
     // Dynamic header and logo classes based on scroll state
     const headerClasses = scrolled 
@@ -171,7 +190,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     </div>
                 </header>
 
-                {/* NEW: Mobile Menu Backdrop (Clicking this closes the menu) */}
+                {/* Mobile Menu Backdrop (Clicking this closes the menu) */}
                 {isMenuOpen && (
                     <div 
                         className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
@@ -250,7 +269,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                             aria-label={social.label} 
                                             target="_blank" 
                                             rel="noopener noreferrer" 
-                                            // The text size is reduced (text-xs) to accommodate the long URL
+                                            // Using 'break-all' on the span below would prevent overflow, 
+                                            // but 'truncate' is fine here since it's a fixed-width footer.
                                             className="inline-flex items-center text-pink-400 hover:text-white transition-colors hover:scale-[1.02] transform text-xs group"
                                         >
                                             {/* Icon (fixed width) */}
@@ -321,7 +341,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     </li>
                                 </ul>
                             </div>
-                            
                         </div>
                     </div>
 
