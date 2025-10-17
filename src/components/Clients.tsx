@@ -5,7 +5,7 @@ import { Award, Zap } from 'lucide-react';
 const clients = [
     { id: 1, name: "PlayAll", accentColor: "text-green-600", industry: "Sports & Fitness", icon: "🏀" },
     { id: 2, name: "KLITE", accentColor: "text-yellow-600", industry: "Lighting Solutions", icon: "💡" },
-    { id: 3, name: "Akshaya Creative Ads (ACA)", accentColor: "text-pink-600", industry: "Creative Media", icon: "🎬" },
+    { id: 3, name: "", accentColor: "text-pink-600", industry: "Creative Media", icon: "🎬" },
 ];
 
 const Clients: React.FC = () => {

@@ -1,14 +1,15 @@
 import React, { useState } from 'react'; 
-import { Mail, Phone, MapPin, Send, Globe, Youtube, Facebook } from 'lucide-react'; 
+// Import all necessary icons, including Instagram
+import { Mail, Phone, MapPin, Send, Globe, Youtube, Facebook, Instagram } from 'lucide-react'; 
 
 const Contact: React.FC = () => {
-    // State for form submission message (replaces alert())
+    // State for form submission message
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     // Placeholder function for form submission
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // **REPLACED ALERT() with state update for UI notification**
+        
         setIsSubmitted(true);
         
         // Hide the message after 5 seconds
@@ -16,29 +17,36 @@ const Contact: React.FC = () => {
             setIsSubmitted(false);
         }, 5000); 
 
-        // Placeholder for actual form reset or API submission logic
         console.log("Form submitted. Using state-based success message.");
         (e.target as HTMLFormElement).reset(); // Reset form fields
     };
 
-    // THIS IS THE CORRECT, FULLY FUNCTIONAL EMBED URL FOR MANJEERA TRINITY CORPORATE
-    const mapEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.279624898732!2d78.39003107503794!3d17.48924198357774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc91060965e6d63%3A0x868b136511b84958!2sManjeera%20Trinity%20Corporate!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin";
+    // Placeholder for a map embed URL (replace with your actual Google Maps embed code URL)
+    const mapEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.2891907716167!2d78.3970729759363!3d17.450379983471017!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc9103c81e9f45d%3A0xf6039572b834e56c!2sManjeera%20Trinity%20Corporate!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin";
 
-    // MonsterCoders Social Links (UPDATED: YouTube and Facebook only)
+
+    // CONFIRMED MonsterCoders Social Links with URLs
     const socialLinks = [
         { 
             name: "YouTube Channel", 
             icon: Youtube, 
-            href: "https://www.youtube.com/@MonsterCodersIT", 
+            href: "https://youtube.com/@monstercoderssoftwaretrainin?si=Ru6wIwriAfcWovhq", 
             color: "text-red-400", 
             label: "MonsterCoders on YouTube"
         },
         { 
             name: "Facebook Page", 
             icon: Facebook, 
-            href: "https://www.facebook.com/MonsterCodersIT", 
+            href: "https://www.facebook.com/profile.php?id=61565345426571", 
             color: "text-blue-400", 
             label: "MonsterCoders on Facebook"
+        },
+        { 
+            name: "Instagram Page", 
+            icon: Instagram, 
+            href: "https://www.instagram.com/monstercoders_official/", 
+            color: "text-pink-400", 
+            label: "MonsterCoders on Instagram"
         },
     ];
 
@@ -57,21 +65,21 @@ const Contact: React.FC = () => {
                     
                     {/* LEFT SECTION (Columns 1-3): The Contact Form */}
                     <div className="lg:col-span-3">
-                        {/* Success Message Notification (Replaces alert()) */}
+                        {/* Success Message Notification */}
                         {isSubmitted && (
                             <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-xl shadow-lg flex items-center justify-between transition-all duration-500">
                                 <p className='font-semibold'>
                                     Thank you for your **Inquiry**! We'll get back to you shortly.
                                 </p>
                                 <button onClick={() => setIsSubmitted(false)} className="ml-4 text-green-700 hover:text-green-900 font-bold">
-                                    &times;
+                                    ×
                                 </button>
                             </div>
                         )}
 
                         <div 
                             className="p-10 bg-white rounded-2xl shadow-2xl border-t-8 border-pink-600 
-                                         transform transition duration-500 hover:shadow-pink-400/50 hover:scale-[1.01]"
+                                     transform transition duration-500 hover:shadow-pink-400/50 hover:scale-[1.01]"
                         >
                             <h2 className="text-3xl font-bold text-gray-800 mb-6 flex items-center">
                                 <Send size={32} className="mr-3 text-pink-600" /> Start Your Transformation
@@ -105,7 +113,7 @@ const Contact: React.FC = () => {
                                     type="submit" 
                                     className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-xl font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-gray-50 transform transition duration-300 hover:scale-[1.015]"
                                 >
-                                    Submit Inquiry
+                                    Submit Enquiry
                                 </button>
                             </form>
                         </div>
@@ -114,7 +122,7 @@ const Contact: React.FC = () => {
                     {/* RIGHT SECTION (Columns 4-5): Info & Map */}
                     <div className="lg:col-span-2 space-y-8">
                         
-                        {/* Map Embed - NOW FUNCTIONAL */}
+                        {/* Map Embed */}
                         <div className="rounded-2xl overflow-hidden shadow-xl border-2 border-gray-300 h-64 lg:h-80 transition duration-500 hover:shadow-indigo-300/80">
                             <iframe 
                                 src={mapEmbedUrl}
@@ -154,7 +162,7 @@ const Contact: React.FC = () => {
                                     {/* Primary Email */}
                                     <p className="flex items-center text-lg">
                                         <Mail size={20} className="mr-3 text-pink-400 flex-shrink-0" />
-                                        <a href="mailto:maqs@monstercoders.com" className="hover:text-pink-200 transition duration-300 underline">maqs@monstercoders.com</a>
+                                        <a href="mailto:info@monstercoders.com" className="hover:text-pink-200 transition duration-300 underline">info@monstercoders.com</a>
                                     </p>
                                     {/* Secondary Email */}
                                     <p className="flex items-center text-lg">
@@ -170,10 +178,11 @@ const Contact: React.FC = () => {
                                     <a href="http://www.monstercoders.com" target="_blank" rel="noopener noreferrer" className="hover:text-pink-200 transition duration-300 underline">www.monstercoders.com</a>
                                 </p>
 
-                                {/* UPDATED: Social Media Links (YouTube and Facebook only) */}
+                                {/* MODIFIED: Social Media Links (Showing Icons AND URLs) */}
                                 <div className="pt-4 border-t border-indigo-600 mt-4">
                                     <h3 className="text-xl font-bold mb-3">Follow MonsterCoders</h3>
-                                    <div className="flex space-x-6">
+                                    {/* Use space-y-3 to stack the links vertically */}
+                                    <div className="space-y-3"> 
                                         {socialLinks.map((link) => (
                                             <a 
                                                 key={link.name} 
@@ -181,14 +190,19 @@ const Contact: React.FC = () => {
                                                 target="_blank" 
                                                 rel="noopener noreferrer"
                                                 title={link.label}
-                                                className={`text-white hover:text-pink-400 transition-colors transform hover:scale-110`}
+                                                // Use flex to align icon and text horizontally
+                                                className="flex items-center text-white hover:text-pink-200 transition duration-300 underline"
                                             >
-                                                <link.icon size={30} className={link.color} /> 
+                                                {/* ICON */}
+                                                <link.icon size={20} className={`mr-3 flex-shrink-0 ${link.color}`} /> 
+                                                {/* URL TEXT - Using 'truncate' to prevent overflow in smaller containers */}
+                                                <span className='truncate'>
+                                                    {link.href}
+                                                </span>
                                             </a>
                                         ))}
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>

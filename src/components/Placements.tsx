@@ -54,7 +54,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description, col
 
 const Placements: React.FC = () => {
 
-    const companies = ["Tech Mahindra", "Wipro", "Infosys", "HCL", "Ford Motors", "GE"];
+    const companies = ["Tech Mahindra", "Wipro", "Infosys", "HCL", ];
     
     const featureData: FeatureCardProps[] = [
         {

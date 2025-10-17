@@ -103,7 +103,7 @@ const FoundersProfile: React.FC = () => {
                     <AchievementBlock
                         icon={<Zap size={24} />}
                         title="Entrepreneurship"
-                        content={<>Founded a successful software venture in 2017, developed & deployed Inventory & ERP software Inventory and ERP solutions in partnership with KLite across Chennai businesses.</>}
+                        content={<>Founded a successful software venture in 2017, developed & deployed Inventory & ERP software Inventory  in partnership with KLite across Chennai businesses.</>}
                         colorClass="amber" // Defines border, text, hover colors
                         gradientClass="from-amber-300 via-yellow-300 to-orange-300" // Defines shifting background colors
                     />

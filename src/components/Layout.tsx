@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from 'react-router-dom'; 
-import { Menu, X, MapPin, Mail, Phone, Twitter, Instagram, Linkedin } from 'lucide-react'; 
+import { Link, useLocation } from 'react-router-dom';
+// Included necessary icons
+import { Menu, X, MapPin, Mail, Phone,  Instagram, Youtube, Facebook } from 'lucide-react'; 
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -17,9 +18,21 @@ const NavLinks = [
 ];
 
 const SocialLinks = [
-    { icon: Twitter, href: "#twitter", label: "Twitter" },
-    { icon: Instagram, href: "#instagram", label: "Instagram" },
-    { icon: Linkedin, href: "#linkedin", label: "LinkedIn" },
+    { 
+        icon: Facebook, 
+        href: "https://www.facebook.com/profile.php?id=61565345426571", 
+        label: "https://www.facebook.com/profile.php?id=61565345426571"
+    },
+    { 
+        icon: Instagram, 
+        href: "https://www.instagram.com/monstercoders_official/", 
+        label: "https://www.instagram.com/monstercoders_official/"
+    },
+    { 
+        icon: Youtube, 
+        href: "https://youtube.com/@monstercoderssoftwaretrainin?si=Ru6wIwriAfcWovhq", 
+        label: "https://youtube.com/@monstercoderssoftwaretrainin?si=Ru6wIwriAfcWovhq"
+    },
 ];
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
@@ -42,8 +55,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         };
     }, [scrolled]);
     
-    // Function to close the menu after a link is clicked
+    // Function to close the menu after a link is clicked or by external action
     const closeMenu = () => setIsMenuOpen(false);
+    // Function to toggle the menu (for the main button)
+    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     // Dynamic header and logo classes based on scroll state
     const headerClasses = scrolled 
@@ -52,8 +67,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         
     // Adjusted logo size class for better fit on desktop
     const logoSize = scrolled 
-        ? 'text-3xl lg:text-4xl' // Increased size for scrolled state
-        : 'text-4xl lg:text-5xl'; // Increased size for default state
+        ? 'text-3xl lg:text-4xl' 
+        : 'text-4xl lg:text-5xl'; 
         
     // --- Render ---
     return (
@@ -85,7 +100,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 `}>
                     <div className="container mx-auto flex justify-between items-center px-4">
                         
-                        {/* 1. Logo/Brand (TWO-LINE LAYOUT & CENTERED & INCREASED SIZE) */}
+                        {/* 1. Logo/Brand */}
                         <Link to="/" className={`
                             font-extrabold tracking-wide text-white transition-all duration-500 flex flex-col items-center min-w-0 
                         `}>
@@ -98,7 +113,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             {/* Line 2: Apple Logo + IT Training (Increased size) */}
                             <div className="flex items-center mt-[-4px] whitespace-nowrap"> 
                                 <img 
-                                    src="/applelogo.png" // Adjusted to use the consistent file name
+                                    src="/applelogo.png"
                                     alt="Apple Logo" 
                                     className={`
                                         transition-all duration-500 mr-1
@@ -111,15 +126,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     text-lg sm:text-xl lg:text-2xl 
                                     ${scrolled ? 'text-base sm:text-lg' : 'text-lg lg:text-2xl'} 
                                 `}>
-                                    IT Training
+                                    apple in IT Training
                                 </span>
                             </div>
                             
                         </Link>
 
-                        {/* 2. Desktop Navigation (Pill-Shaped Buttons) */}
+                        {/* 2. Desktop Navigation */}
                         <nav className="hidden lg:block text-lg font-medium">
-                            {/* Reduced spacing for more room on desktop */}
                             <ul className="flex space-x-2 xl:space-x-4">
                                 {NavLinks.map(link => {
                                     const isActive = location.pathname === link.path;
@@ -147,7 +161,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         {/* 3. Mobile Menu Button */}
                         <div className="lg:hidden">
                             <button
-                                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                onClick={toggleMenu} // Use the toggle function here
                                 className="text-white hover:text-pink-400 p-2 rounded-md transition duration-300 focus:outline-none"
                                 aria-label="Toggle menu"
                             >
@@ -156,6 +170,16 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         </div>
                     </div>
                 </header>
+
+                {/* NEW: Mobile Menu Backdrop (Clicking this closes the menu) */}
+                {isMenuOpen && (
+                    <div 
+                        className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+                        onClick={closeMenu} 
+                        aria-hidden="true"
+                    ></div>
+                )}
+
 
                 {/* 4. Mobile Menu Overlay (FIXED POSITIONING) */}
                 <div 
@@ -168,8 +192,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             : 'translate-x-full opacity-0 scale-95 pointer-events-none'}
                     `}
                 >
-                    {/* The stray comment/text line has been removed from here */}
-                    <nav className="flex flex-col pt-24 p-4 space-y-2"> 
+                    {/* Added: Close button inside the menu */}
+                    <div className="flex justify-end p-4">
+                        <button
+                            onClick={closeMenu}
+                            className="text-white hover:text-pink-400 p-2 rounded-md transition duration-300 focus:outline-none"
+                            aria-label="Close menu"
+                        >
+                            <X size={30} />
+                        </button>
+                    </div>
+
+                    <nav className="flex flex-col p-4 space-y-2"> 
                         {NavLinks.map(link => (
                             <Link
                                 key={link.name}
@@ -206,14 +240,28 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                 <p className="text-sm leading-relaxed">
                                     Pioneering the future of tech education with cutting-edge curricula and real-world projects.
                                 </p>
-                                <div className="flex space-x-4 mt-6">
+                                
+                                {/* MODIFIED SECTION: Social Links with Icons and FULL URL Text */}
+                                <div className="flex flex-col space-y-2 mt-6">
                                     {SocialLinks.map((social) => (
-                                        <a key={social.label} href={social.href} aria-label={social.label} 
-                                           className="text-pink-400 hover:text-pink-500 transition-colors transform hover:scale-110">
-                                            <social.icon size={24} />
+                                        <a 
+                                            key={social.label} 
+                                            href={social.href} 
+                                            aria-label={social.label} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer" 
+                                            // The text size is reduced (text-xs) to accommodate the long URL
+                                            className="inline-flex items-center text-pink-400 hover:text-white transition-colors hover:scale-[1.02] transform text-xs group"
+                                        >
+                                            {/* Icon (fixed width) */}
+                                            <social.icon size={20} className="mr-2 flex-shrink-0 text-pink-500 group-hover:text-white" />
+                                            {/* Label (This now displays the full URL) */}
+                                            <span className="font-light truncate">{social.label}</span>
                                         </a>
                                     ))}
                                 </div>
+                                {/* END OF MODIFIED SECTION */}
+
                             </div>
                             
                             {/* Quick Links */}
@@ -262,7 +310,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                         <a href="mailto:info@monstercoders.com" className="hover:text-white transition-colors">info@monstercoders.com</a>
                                     </li>
                                     {/* Secondary Email */}
-                                        <li className="flex items-center">
+                                    <li className="flex items-center">
                                         <Mail size={18} className="text-pink-500 mr-3" />
                                         <a href="mailto:MonsterCoders@gmail.com" className="hover:text-white transition-colors">MonsterCoders@gmail.com</a>
                                     </li>
