@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom';
 // Included necessary icons
-import { Menu, X, MapPin, Mail, Phone, Instagram, Youtube, Facebook } from 'lucide-react'; 
+import { Menu, X, MapPin, Mail, Phone, Instagram, Youtube, Facebook, Globe } from 'lucide-react'; 
 
 interface LayoutProps {
     children: React.ReactNode;
 }
 
 const NavLinks = [
+    { name: 'Home', path: '/' }, // Added Home link
     { name: 'About Us', path: '/about' },
     { name: 'Vision & Mission', path: '/vision-mission' },
     { name: 'Founders Profile', path: '/founders' },
@@ -45,7 +46,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     // Function to toggle the menu (for the main button)
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-    // Effect to handle scroll-based dynamic header styling (Your existing code)
+    // Effect to handle scroll-based dynamic header styling
     useEffect(() => {
         const handleScroll = () => {
             const isScrolled = window.scrollY > 80;
@@ -60,7 +61,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         };
     }, [scrolled]);
     
-    // 💡 NEW EFFECT: Handle 'Escape' key press to close the menu
+    // Effect: Handle 'Escape' key press to close the menu
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Escape' && isMenuOpen) {
@@ -77,17 +78,17 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [isMenuOpen]); // Re-run effect when the menu state changes
+    }, [isMenuOpen]);
 
     // Dynamic header and logo classes based on scroll state
     const headerClasses = scrolled 
         ? 'py-2 bg-purple-900/95 backdrop-blur-md shadow-3xl'
         : 'py-4 bg-purple-900/90 backdrop-blur-sm shadow-2xl';
         
-    // Adjusted logo size class for better fit on desktop
+    // Adjusted logo size class (SLIGHTLY REDUCED DEFAULT SIZE)
     const logoSize = scrolled 
         ? 'text-3xl lg:text-4xl' 
-        : 'text-4xl lg:text-5xl'; 
+        : 'text-3xl lg:text-4xl'; // Default is now text-3xl/lg:text-4xl (was 4xl/5xl)
         
     // --- Render ---
     return (
@@ -117,33 +118,34 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     text-white sticky top-0 z-60 transition-all duration-500 ease-in-out
                     ${headerClasses}
                 `}>
-                    <div className="container mx-auto flex justify-between items-center px-4">
+                    {/* MODIFIED: Added 'space-x-8' and changed 'justify-between' to give the logo more breathing room on the left */}
+                    <div className="container mx-auto flex justify-start items-center px-4 space-x-8"> 
                         
                         {/* 1. Logo/Brand */}
                         <Link to="/" className={`
                             font-extrabold tracking-wide text-white transition-all duration-500 flex flex-col items-center min-w-0 
                         `}>
                             
-                            {/* Line 1: MonsterCoders (Uses increased logoSize variable) */}
+                            {/* Line 1: MonsterCoders (Uses SLIGHTLY REDUCED logoSize variable) */}
                             <span className={logoSize}>
                                 <span className="text-pink-500">M</span>onster<span className="text-pink-500">C</span>oders
                             </span>
                             
-                            {/* Line 2: Apple Logo + IT Training (Increased size) */}
+                            {/* Line 2: Apple Logo + IT Training (Adjusted for new logo size) */}
                             <div className="flex items-center mt-[-4px] whitespace-nowrap"> 
                                 <img 
                                     src="/applelogo.png"
                                     alt="Apple Logo" 
                                     className={`
                                         transition-all duration-500 mr-1
-                                        ${scrolled ? 'h-6' : 'h-8'} 
+                                        ${scrolled ? 'h-5' : 'h-6'} 
                                     `}
                                     style={{ filter: 'grayscale(0) drop-shadow(0 0 5px rgba(255, 255, 255, 0.7))' }} 
                                 />
                                 <span className={`
                                     text-pink-400 font-semibold transition-all duration-500 
-                                    text-lg sm:text-xl lg:text-2xl 
-                                    ${scrolled ? 'text-base sm:text-lg' : 'text-lg lg:text-2xl'} 
+                                    text-base sm:text-lg lg:text-xl 
+                                    ${scrolled ? 'text-sm sm:text-base' : 'text-base lg:text-xl'} 
                                 `}>
                                     apple in IT Training
                                 </span>
@@ -151,19 +153,27 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             
                         </Link>
 
-                        {/* 2. Desktop Navigation */}
-                        <nav className="hidden lg:block text-lg font-medium">
-                            <ul className="flex space-x-2 xl:space-x-4">
+                        {/* 2. Desktop Navigation (Alignment Fixes & now takes up the remaining space) */}
+                        <nav className="hidden lg:block text-lg font-medium flex-grow">
+                            {/* FIX 1: Added 'items-center' to vertically align all links */}
+                            {/* NOTE: We removed space-x-2/xl:space-x-4 from the ul and added 'space-x-2' to the li's for more consistent padding */}
+                            <ul className="flex justify-end items-center"> 
                                 {NavLinks.map(link => {
-                                    const isActive = location.pathname === link.path;
+                                    // Active link logic
+                                    const isActive = link.path === '/' 
+                                        ? location.pathname === '/' 
+                                        : location.pathname.startsWith(link.path);
+                                        
                                     return (
                                         <li key={link.name}>
                                             <Link 
                                                 to={link.path} 
+                                                // FIX 2: Added 'whitespace-nowrap' to prevent text wrapping
                                                 className={`
                                                     px-3 py-2 rounded-full border border-pink-500 transition-all duration-300 text-sm lg:text-base font-semibold 
                                                     bg-purple-800/60 hover:bg-purple-700/80
                                                     transform hover:scale-[1.05] hover:shadow-pink-400/50 hover:shadow-xl
+                                                    whitespace-nowrap ml-2 // Added ml-2 for horizontal separation
                                                     ${isActive 
                                                         ? 'bg-pink-600 text-white border-pink-400 scale-[1.02] shadow-pink-500/70 shadow-lg' 
                                                         : 'text-gray-200'}
@@ -260,28 +270,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     Pioneering the future of tech education with cutting-edge curricula and real-world projects.
                                 </p>
                                 
-                                {/* MODIFIED SECTION: Social Links with Icons and FULL URL Text */}
-                                <div className="flex flex-col space-y-2 mt-6">
-                                    {SocialLinks.map((social) => (
-                                        <a 
-                                            key={social.label} 
-                                            href={social.href} 
-                                            aria-label={social.label} 
-                                            target="_blank" 
-                                            rel="noopener noreferrer" 
-                                            // Using 'break-all' on the span below would prevent overflow, 
-                                            // but 'truncate' is fine here since it's a fixed-width footer.
-                                            className="inline-flex items-center text-pink-400 hover:text-white transition-colors hover:scale-[1.02] transform text-xs group"
-                                        >
-                                            {/* Icon (fixed width) */}
-                                            <social.icon size={20} className="mr-2 flex-shrink-0 text-pink-500 group-hover:text-white" />
-                                            {/* Label (This now displays the full URL) */}
-                                            <span className="font-light truncate">{social.label}</span>
-                                        </a>
-                                    ))}
+                                {/* Social Links */}
+                                <div className="flex space-x-3 mt-6">
+                                    <a href="https://www.facebook.com/profile.php?id=61565345426571" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-pink-500 hover:text-white transition-colors"><Facebook size={24} /></a>
+                                    <a href="https://www.instagram.com/monstercoders_official/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-pink-500 hover:text-white transition-colors"><Instagram size={24} /></a>
+                                    <a href="https://youtube.com/@monstercoderssoftwaretrainin?si=Ru6wIwriAfcWovhq" target="_blank" rel="noopener noreferrer" aria-label="Youtube" className="text-pink-500 hover:text-white transition-colors"><Youtube size={24} /></a>
+                                    <a href="www.monstercoders.com" target="_blank" rel="noopener noreferrer" aria-label="Website" className="text-pink-500 hover:text-white transition-colors"><Globe size={24} /></a>
                                 </div>
-                                {/* END OF MODIFIED SECTION */}
-
                             </div>
                             
                             {/* Quick Links */}
@@ -290,7 +285,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                     Quick Links
                                 </h4>
                                 <ul className="space-y-2 text-sm">
-                                    {NavLinks.slice(0, 4).map(link => ( // Showing only a few key links
+                                    {NavLinks.slice(0, 5).map(link => ( 
                                         <li key={link.name}>
                                             <Link to={link.path} className="hover:text-white transition-colors">
                                                 {link.name}
@@ -300,7 +295,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                                 </ul>
                             </div>
 
-                            {/* Services/More Links */}
+                            {/* Resources Links */}
                             <div>
                                 <h4 className="text-xl font-semibold text-pink-400 mb-4 border-b-2 border-pink-500/50 pb-1 inline-block">
                                     Resources
